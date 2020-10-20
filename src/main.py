@@ -25,9 +25,9 @@ class Window(QMainWindow):
 
         # Our response of an purchase order
         t.post_purchase_order_response(
-            request_id='IO1833064', status='ACCEPTED', reason='',
-            external_reference='', gross_amount=0.0, tax_amount=0.0,
-            total_amount=0.0, confirmed_delivery_from='', confirmed_delivery_to='',
+            request_id='IO1833064', status='ACCEPTED', reason='Just a test reason',
+            external_reference='Test reference', gross_amount=0.0, tax_amount=0.0,
+            total_amount=0.0, confirmed_delivery_from='Test confirmed delivery from', confirmed_delivery_to='Test confirmed delivery to',
             lines={
                 'supplier_item_no': '',
                 'line_no': 10000,
@@ -45,10 +45,16 @@ class Window(QMainWindow):
 
         # Dispatch purchase order
         t.post_purchase_order_dispatch(
-            purchase_order_id='', dispatch_date='', delivery_date='',
-            lines={},
-            external_reference='', carrier_reference='', shipping_agent='',
-            shipping_agent_service='', tracking_code='',
+            purchase_order_id='IO1833064', dispatch_date='2039-05-03T12:18:53+02:00',
+            delivery_date='2045-05-03T12:18:53+02:00',
+            lines={
+                'supplier_item_no': 'supplier no test',
+                'line_no': 10,
+                'quantity': 15,
+                'quantity_outstanding': 20
+            },
+            external_reference='ext ref test', carrier_reference='Carrier ref test', shipping_agent='Shipping agent test',
+            shipping_agent_service='Shipping agent service test', tracking_code='Tracking code test',
             dispatch_address={}
         )
 
