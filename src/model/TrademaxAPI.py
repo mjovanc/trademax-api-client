@@ -58,16 +58,54 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
-    def post_purchase_order_response(self, response):
+    def post_purchase_order_response(
+            self, request_id, status, reason, external_reference, gross_amount, tax_amount,
+            total_amount, confirmed_delivery_from, confirmed_delivery_to, lines
+    ):
         """
         Use to send a response to the Trademax API if accepted, rejected or corrected.
         """
 
-    def post_purchase_order_dispatch(self, obj):
+        url = self.API_URL + '/purchase-order-responses'
+        data = {
+            'request_id': request_id, 'status': status, 'reason': reason,
+            'external_reference': external_reference, 'gross_amount': gross_amount, 'tax_amount': tax_amount,
+            'total_amount': total_amount, 'confirmed_delivery_from': confirmed_delivery_from,
+            'confirmed_delivery_to': confirmed_delivery_to, 'lines': lines
+        }
+        headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
+
+        r = requests.post(url, json=data, headers=headers)
+
+        if r.status_code == 201:
+            return r
+        else:
+            return r.raise_for_status()
+
+    def post_purchase_order_dispatch(
+            self, purchase_order_id, dispatch_date, delivery_date, lines,
+            external_reference, carrier_reference, shipping_agent,
+            shipping_agent_service, tracking_code, dispatch_address
+    ):
         """
         Sends order dispatch by POST request to Trademax API.
         """
-        pass
+        url = self.API_URL + '/purchase-order-dispatch'
+        data = {
+            'purchase_order_id': purchase_order_id, 'dispatch_date': dispatch_date,
+            'delivery_date': delivery_date, 'lines': lines, 'external_reference': external_reference,
+            'carrier_reference': carrier_reference, 'shipping_agent': shipping_agent,
+            'shipping_agent_service': shipping_agent_service, 'tracking_code': tracking_code,
+            'dispatch_address': dispatch_address
+        }
+        headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
+
+        r = requests.post(url, json=data, headers=headers)
+
+        if r.status_code == 201:
+            return r
+        else:
+            return r.raise_for_status()
 
     def post_purchase_order_invoice(self, obj):
         """
