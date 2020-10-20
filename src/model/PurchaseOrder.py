@@ -11,17 +11,20 @@ class PurchaseOrder:
     tax_amount = 0.0
     total_amount = 0.0
     is_partial_delivery = False
-
-    # Objects here
-    sales_order = None
-    delivery_address = None
-    supplier = None
-    lines = None
+    sales_order = {}
+    delivery_address = {}
+    supplier = {}
+    lines = {}
 
     def __init__(
             self, id, purchase_order_id, latest, created_at, acknowledged_at, requested_delivery_from,
-            requested_delivery_to, currency, gross_amount, tax_amount, total_amount, is_partial_delivery
+            requested_delivery_to, currency, gross_amount, tax_amount, total_amount, is_partial_delivery,
+            sales_order, delivery_address, supplier, lines
     ):
+        self.lines = lines
+        self.supplier = supplier
+        self.delivery_address = delivery_address
+        self.sales_order = sales_order
         self.is_partial_delivery = is_partial_delivery
         self.total_amount = total_amount
         self.tax_amount = tax_amount

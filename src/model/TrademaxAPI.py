@@ -42,6 +42,39 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
+    def post_purchase_order_acknowledgement(self, request_id, acknowledged_at):
+        """
+        Sends an acknowledgement for one purchase order by doing a POST request.
+        """
+
+        url = self.API_URL + '/purchase-order-acknowledgements'
+        data = {'request_id': request_id, 'acknowledged_at': acknowledged_at}
+        headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
+
+        r = requests.post(url, json=data, headers=headers)
+
+        if r.status_code == 201:
+            return r
+        else:
+            return r.raise_for_status()
+
+    def post_purchase_order_response(self, response):
+        """
+        Use to send a response to the Trademax API if accepted, rejected or corrected.
+        """
+
+    def post_purchase_order_dispatch(self, obj):
+        """
+        Sends order dispatch by POST request to Trademax API.
+        """
+        pass
+
+    def post_purchase_order_invoice(self, obj):
+        """
+        Sends order invoice by POST request to Trademax API.
+        """
+        pass
+
     def get_purchase_order_list(self):
         """
         Gets all purchase orders by doing a GET request.

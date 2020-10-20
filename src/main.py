@@ -13,10 +13,19 @@ class Window(QMainWindow):
         # self.show()
 
         t = TrademaxAPI()
-        po = t.get_purchase_order("IO1833064")
-        print(po)
-        exit(1) # just to escape the loop (temporary)
 
+        # Get one purchase order
+        po = t.get_purchase_order('IO1833064')
+
+        # Acknowledge one purchase order
+        t.post_purchase_order_acknowledgement('IO1833064', 'datum här')
+
+        # Response of purchase order
+
+        # Dispatch purchase order
+
+
+        exit(1)  # just to escape the loop (temporary)
 
 
 app = QApplication(sys.argv)
