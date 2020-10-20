@@ -1,0 +1,48 @@
+{
+	"id": "IO1833680",
+	"purchase_order_id": "IO1833680",
+	"latest": true,
+	"created_at": "2020-05-04T09:54:15+02:00",
+	"acknowledged_at": "none",
+	"requested_delivery_from": "2020-07-24T00:00:00+02:00",
+	"requested_delivery_to": "2020-07-24T00:00:00+02:00",
+	"currency": "SEK",
+	"gross_amount": 1447.6,
+	"tax_amount": 361.9,
+	"total_amount": 1809.5,
+	"is_partial_delivery": false,
+	"sales_order": {
+		"id": "E15627236",
+		"channel": "Barkaby TM Butik",
+		"tenant": "TM_SE"
+	},
+	"delivery_address": {
+		"name": "Stephen Ziemann",
+		"phone": "0772327053",
+		"email": "elva.weber@moen.biz",
+		"address": "87257 Orrin Stravenue Apt. 215",
+		"postcode": "15252", "city": "North Lilly",
+		"country_code": "SE", "country": "Sweden"
+	},
+	"supplier": {
+		"supplier_id": "50217314",
+		"name": "Stenexpo"
+	}, 
+	"lines": {
+		"item_no": "646036",
+		"supplier_item_no": "8945",
+		"line_no": 10000,
+		"quantity": 1,
+		"quantity_accepted": 1,
+		"quantity_dispatched": 1,
+		"quantity_received": 1,
+		"units": "Piece",
+		"gross_price": 1447.6,
+		"tax_percentage": 25,
+		"gross_amount": 1447.6,
+		"tax_amount": 361.9,
+		"total_amount": 1809.5,
+		"confirmed_delivery_from": "2020-05-07T00:00:00+02:00",
+		"confirmed_delivery_to": "2020-05-07T00:00:00+02:00"
+	}
+}
