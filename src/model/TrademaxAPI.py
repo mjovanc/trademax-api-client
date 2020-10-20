@@ -42,6 +42,37 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
+    def get_purchase_order_list(self):
+        """
+        Gets all purchase orders by doing a GET request.
+        """
+
+        created_date_from = None
+        created_date_to = None
+        latest = 1
+        per_page = 50
+        sales_order_tenant = ''
+
+        r = requests.get(self.API_URL + '/purchase-order-requests', headers={
+            'Authorization': self.TOKEN
+        }).json()
+
+        num_pages = r['pagination']['last_page']
+        print(r)
+
+        for page in range(2, num_pages + 1):
+            print('PAGE NUMBER : ' + str(page))
+
+            new_req = requests.get(
+                self.API_URL + '/purchase-order-requests',
+                headers={'Authorization': self.TOKEN},
+                params={'current_page': page}).json()
+
+            for d in new_req['data']:
+                if d is not None:
+                    print(d)
+                    # print(d['purchase_order_id'])
+
     def post_purchase_order_acknowledgement(self, request_id, acknowledged_at):
         """
         Sends an acknowledgement for one purchase order by doing a POST request.
@@ -107,39 +138,25 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
-    def post_purchase_order_invoice(self, obj):
+    def post_purchase_order_invoice(
+            self, purchase_order_id, lines, external_reference, gross_amount,
+            total_amount, tax_amount, invoice_date, due_date
+    ):
         """
         Sends order invoice by POST request to Trademax API.
         """
-        pass
+        url = self.API_URL + '/purchase-order-dispatch'
+        data = {
+            'purchase_order_id': purchase_order_id, 'lines': lines,
+            'external_reference': external_reference, 'gross_amount': gross_amount,
+            'total_amount': total_amount, 'tax_amount': tax_amount, 'invoice_date': invoice_date,
+            'due_date': due_date
+        }
+        headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
 
-    def get_purchase_order_list(self):
-        """
-        Gets all purchase orders by doing a GET request.
-        """
+        r = requests.post(url, json=data, headers=headers)
 
-        created_date_from = None
-        created_date_to = None
-        latest = 1
-        per_page = 50
-        sales_order_tenant = ''
-
-        r = requests.get(self.API_URL + '/purchase-order-requests', headers={
-            'Authorization': self.TOKEN
-        }).json()
-
-        num_pages = r['pagination']['last_page']
-        print(r)
-
-        for page in range(2, num_pages + 1):
-            print('PAGE NUMBER : ' + str(page))
-
-            new_req = requests.get(
-                self.API_URL + '/purchase-order-requests',
-                headers={'Authorization': self.TOKEN},
-                params={'current_page': page}).json()
-
-            for d in new_req['data']:
-                if d is not None:
-                    print(d)
-                    # print(d['purchase_order_id'])
+        if r.status_code == 201:
+            return r
+        else:
+            return r.raise_for_status()

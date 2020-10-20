@@ -58,6 +58,11 @@ class Window(QMainWindow):
             dispatch_address={}
         )
 
+        # Do a purchase order invoice
+        t.post_purchase_order_invoice(
+            purchase_order_id='', lines={}, external_reference='', gross_amount=0.0,
+            total_amount=0.0, tax_amount=0.0, invoice_date='', due_date=''
+        )
 
         exit(1)  # just to escape the loop (temporary)
 
