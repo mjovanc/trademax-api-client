@@ -3,6 +3,10 @@ import json
 
 
 class TrademaxAPI:
+    """
+    The TrademaxAPI class to handle all API requests.
+    """
+
     API_UUID = '9f54693a-4608-4751-835a-d1e65265d187'
     API_PASSWORD = 'order@stenexpo.com'
     API_URL = 'http://api-231.trademax-test.com/v2'
@@ -106,11 +110,14 @@ class TrademaxAPI:
         }
         headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
 
+        print(data)
+
         r = requests.post(url, json=data, headers=headers)
 
         if r.status_code == 201:
             return r
         else:
+            print(r.text)
             return r.raise_for_status()
 
     def post_purchase_order_dispatch(
