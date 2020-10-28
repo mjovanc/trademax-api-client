@@ -140,7 +140,7 @@ class TrademaxAPI:
 
         r = requests.post(url, json=data, headers=headers)
 
-        if r.status_code == 201:
+        if r.status_code == 201 or r.status_code == 200:
             return r
         else:
             return r.raise_for_status()
@@ -163,7 +163,7 @@ class TrademaxAPI:
 
         r = requests.post(url, json=data, headers=headers)
 
-        if r.status_code == 201:
+        if r.status_code == 201 or r.status_code == 200:
             return r
         else:
             return r.raise_for_status()
