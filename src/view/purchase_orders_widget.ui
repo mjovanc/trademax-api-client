@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>PurchaseOrdersWidget</class>
+ <widget class="QWidget" name="PurchaseOrdersWidget">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,20 +14,46 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Inköpsordrar</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>601</width>
+     <width>851</width>
      <height>471</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListWidget" name="purchase_orders_widget"/>
+     <widget class="QListWidget" name="PurchaseOrdersWidget_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>480</y>
+     <width>851</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="btn_open">
+      <property name="styleSheet">
+       <string notr="true">l</string>
+      </property>
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

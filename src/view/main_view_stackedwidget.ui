@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>stackedWidget</class>
+ <widget class="QStackedWidget" name="stackedWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,14 +13,14 @@
   <property name="windowTitle">
    <string>Trademax API Client</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="page">
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>511</width>
-      <height>101</height>
+      <x>10</x>
+      <y>10</y>
+      <width>501</width>
+      <height>131</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -39,9 +39,9 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>110</y>
-      <width>511</width>
+      <x>10</x>
+      <y>160</y>
+      <width>501</width>
       <height>131</height>
      </rect>
     </property>
@@ -53,15 +53,6 @@
        </property>
        <property name="text">
         <string>Inköpsordrar</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
        </property>
       </widget>
      </item>
