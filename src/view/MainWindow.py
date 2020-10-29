@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
+from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QMessageBox
 
 from model.TrademaxAPI import TrademaxAPI
 
@@ -10,42 +10,36 @@ from model.TrademaxAPI import TrademaxAPI
 #         uic.loadUi('view/about_widget.ui')
 
 
-class PurchaseOrdersWidget(QTableWidget):
-    po_data = {'col1': ['1', '2', '3', '4'],
-            'col2': ['1', '2', '1', '3'],
-            'col3': ['1', '1', '2', '1']}
+class PurchaseOrderWidget(QListWidget):
+    def __init__(self, parent=None):
+        super(PurchaseOrderWidget, self).__init__(parent)
+        uic.loadUi('view/purchase_order_widget.ui')
 
-    po_data2 = {}
 
+class PurchaseOrdersWidget(QListWidget):
     def __init__(self, parent=None):
         super(PurchaseOrdersWidget, self).__init__(parent)
         uic.loadUi('view/purchase_orders_widget.ui')
         self.trademax_api = TrademaxAPI()
+        self.set_intial_list_data()
 
-        self.set_column_labels()
-        self.data = self.po_data2
-        self.setAlternatingRowColors(True)
-        self.setColumnCount(len(self.data.keys()))
-        self.setRowCount(len(self.data.values()))
-        self.set_data()
-
-    def set_data(self):
-        po = self.trademax_api.get_all_purchase_orders()
-
-        hor_headers = []
-
-        for n, key in enumerate(sorted(self.data.keys())):
-            hor_headers.append(key)
-            for m, item in enumerate(self.data[key]):
-                new_item = QTableWidgetItem(item)
-                self.setItem(m, n, new_item)
-        self.setHorizontalHeaderLabels(hor_headers)
+        self.itemClicked.connect(self.open_purchase_order)
 
     def set_column_labels(self):
         po = self.trademax_api.get_all_purchase_orders()
-
         for key, value in po[0].items():
             self.po_data2[str(key)] = []
+
+    def set_intial_list_data(self):
+        po = self.trademax_api.get_all_purchase_orders()
+        for p in po:
+            self.addItem(QListWidgetItem(p['purchase_order_id'], self))
+
+    def open_purchase_order(self, item):
+        purchase_order_id = item.text()
+
+
+
 
 
 class MainWindow(QtWidgets.QMainWindow):
