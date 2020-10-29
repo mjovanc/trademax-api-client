@@ -24,7 +24,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTableWidget" name="purchase_orders_widget"/>
+     <widget class="QListWidget" name="purchase_orders_widget"/>
     </item>
    </layout>
   </widget>

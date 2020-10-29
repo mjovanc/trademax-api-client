@@ -1,4 +1,3 @@
-from model.TrademaxAPI import TrademaxAPI
 from view.MainWindow import MainWindow
 
 

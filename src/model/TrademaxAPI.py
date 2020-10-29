@@ -46,26 +46,34 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
-    def get_purchase_order_list(self):
+    def get_all_purchase_orders(self):
         """
         Gets all purchase orders by doing a GET request.
         """
 
-        created_date_from = None
-        created_date_to = None
+        created_date_from = '2020-08-02T12:27:06+02:00'
+        created_date_to = '2020-10-09T12:27:06+02:00'
         latest = 1
-        per_page = 50
+        per_page = 25
         sales_order_tenant = ''
 
-        r = requests.get(self.API_URL + '/purchase-order-requests', headers={
-            'Authorization': self.TOKEN
-        }).json()
+        url = self.API_URL + '/purchase-order-requests'
+        headers = {'Authorization': self.TOKEN}
+        data = {
+            'created_date_from': created_date_from,
+            'created_date_to': created_date_to,
+            'latest': latest,
+            'per_page': per_page,
+            'sales_order_tenant': ''
+        }
+        r = requests.get(url, json=data, headers=headers).json()
 
         num_pages = r['pagination']['last_page']
-        print(r)
 
-        for page in range(2, num_pages + 1):
-            print('PAGE NUMBER : ' + str(page))
+        all_purchase_orders = []
+
+        for page in range(1, num_pages + 1):
+            # print('PAGE NUMBER : ' + str(page))
 
             new_req = requests.get(
                 self.API_URL + '/purchase-order-requests',
@@ -74,8 +82,9 @@ class TrademaxAPI:
 
             for d in new_req['data']:
                 if d is not None:
-                    print(d)
-                    # print(d['purchase_order_id'])
+                    all_purchase_orders.append(d)
+
+        return all_purchase_orders
 
     def post_purchase_order_acknowledgement(self, request_id, acknowledged_at):
         """

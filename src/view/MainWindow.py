@@ -1,30 +1,38 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QTableWidget
+from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
+
+from model.TrademaxAPI import TrademaxAPI
 
 # class AboutWidget(QWidget):
 #     def __init__(self, parent=None):
 #         super(AboutWidget, self).__init__(parent)
 #         uic.loadUi('view/about_widget.ui')
 
-data = {'col1': ['1', '2', '3', '4'],
-        'col2': ['1', '2', '1', '3'],
-        'col3': ['1', '1', '2', '1']}
-
 
 class PurchaseOrdersWidget(QTableWidget):
+    po_data = {'col1': ['1', '2', '3', '4'],
+            'col2': ['1', '2', '1', '3'],
+            'col3': ['1', '1', '2', '1']}
+
+    po_data2 = {}
+
     def __init__(self, parent=None):
         super(PurchaseOrdersWidget, self).__init__(parent)
         uic.loadUi('view/purchase_orders_widget.ui')
-        self.data = data
+        self.trademax_api = TrademaxAPI()
+
+        self.set_column_labels()
+        self.data = self.po_data2
+        self.setAlternatingRowColors(True)
         self.setColumnCount(len(self.data.keys()))
         self.setRowCount(len(self.data.values()))
-        # self.setHorizontalHeaderLabels()
         self.set_data()
 
     def set_data(self):
+        po = self.trademax_api.get_all_purchase_orders()
+
         hor_headers = []
-        # hor_headers_labels = [] will load dynamically this when getting latest purchase orders
 
         for n, key in enumerate(sorted(self.data.keys())):
             hor_headers.append(key)
@@ -32,6 +40,12 @@ class PurchaseOrdersWidget(QTableWidget):
                 new_item = QTableWidgetItem(item)
                 self.setItem(m, n, new_item)
         self.setHorizontalHeaderLabels(hor_headers)
+
+    def set_column_labels(self):
+        po = self.trademax_api.get_all_purchase_orders()
+
+        for key, value in po[0].items():
+            self.po_data2[str(key)] = []
 
 
 class MainWindow(QtWidgets.QMainWindow):
