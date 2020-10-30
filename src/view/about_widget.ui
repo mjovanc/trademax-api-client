@@ -18,7 +18,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>616</width>
+     <width>1581</width>
      <height>351</height>
     </rect>
    </property>
@@ -43,6 +43,9 @@
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>Skapad av Marcus Cvjeticanin November 2020 - https://github.com/mjovanc</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

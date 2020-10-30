@@ -27,7 +27,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListWidget" name="PurchaseOrdersWidget_2">
+     <widget class="QListWidget" name="purchase_orders_list">
       <property name="enabled">
        <bool>true</bool>
       </property>

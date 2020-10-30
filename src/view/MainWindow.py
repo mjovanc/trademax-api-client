@@ -26,17 +26,14 @@ class PurchaseOrdersWidget(QWidget):
         # self.set_intial_list_data()
         # self.itemClicked.connect(self.open_purchase_order)
 
-    # def set_column_labels(self):
-    #     for key, value in self.purchase_orders[0].items():
-    #         self.po_data2[str(key)] = []
-    #
     # def set_intial_list_data(self):
-    #    for p in self.purchase_orders:
-    #         self.purchase_orders_widget.addItem(QListWidgetItem(p['purchase_order_id'], self))
-    #
-    # def open_purchase_order(self, item):
-    #     purchase_order_id = item.text()
-    #     # change to another scene (class)
+       #for p in self.purchase_orders:
+       #    self.
+        # self.purchase_orders_list.addItem(QListWidgetItem(p['purchase_order_id'], self))
+
+    def open_purchase_order(self, item):
+        purchase_order_id = item.text()
+        # change to another scene (class)
 
 
 class MainWindow(QStackedWidget):
@@ -50,14 +47,13 @@ class MainWindow(QStackedWidget):
         self.about_widget = AboutWidget()
         self.addWidget(self.about_widget)
 
-        self.btn_purchase_orders.clicked.connect(self.go_to_first)
-        print(self.btn_purchase_orders)
-        self.btn_about.clicked.connect(self.go_to_second)
+        self.btn_purchase_orders.clicked.connect(self.go_to_purchase_orders_page)
+        self.btn_about.clicked.connect(self.go_to_about_page)
 
-    def go_to_first(self):
+    def go_to_purchase_orders_page(self):
         self.setCurrentIndex(1)
 
-    def go_to_second(self):
+    def go_to_about_page(self):
         self.setCurrentIndex(2)
 
 

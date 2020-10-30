@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Trademax API Client</string>
   </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
   <widget class="QWidget" name="page">
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
