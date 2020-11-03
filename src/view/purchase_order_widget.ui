@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>purchase_order_widget</class>
+ <widget class="QWidget" name="purchase_order_widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,6 +13,227 @@
   <property name="windowTitle">
    <string>Purchase Order</string>
   </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>50</y>
+     <width>631</width>
+     <height>631</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label1">
+        <property name="text">
+         <string>Purchase Order ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="purchase_order_id"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label2">
+        <property name="text">
+         <string>Created At:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="created_at"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label8">
+        <property name="text">
+         <string>Acknowledged At:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="acknowledged_at"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label3">
+        <property name="text">
+         <string>Requested Delivery From:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="requested_delivery_from"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label5">
+        <property name="text">
+         <string>Requested Delivery To:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="requested_delivery_to"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label4">
+        <property name="text">
+         <string>Gross Amount:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="gross_amount"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label6">
+        <property name="text">
+         <string>Tax Amount:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="tax_amount"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label7">
+        <property name="text">
+         <string>Total Amount: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="total_amount"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label9">
+        <property name="text">
+         <string>Is Partial Delivery:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QCheckBox" name="is_partial_delivery">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Delivery Address:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QLineEdit" name="lineEdit_2"/>
+      </item>
+      <item row="13" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Phone:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="1">
+       <widget class="QLineEdit" name="lineEdit_3"/>
+      </item>
+      <item row="11" column="0">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="14" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Email:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Address:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Postcode:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Country Code:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="1">
+       <widget class="QLineEdit" name="lineEdit_4"/>
+      </item>
+      <item row="15" column="1">
+       <widget class="QLineEdit" name="lineEdit_5"/>
+      </item>
+      <item row="16" column="1">
+       <widget class="QLineEdit" name="lineEdit_6"/>
+      </item>
+      <item row="17" column="1">
+       <widget class="QLineEdit" name="lineEdit_7"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>
