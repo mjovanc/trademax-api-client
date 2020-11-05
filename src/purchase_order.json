@@ -20,9 +20,11 @@
 		"name": "Stephen Ziemann",
 		"phone": "0772327053",
 		"email": "elva.weber@moen.biz",
-		"address": "87257 Orrin Stravenue Apt. 215", 2d
-		"postcode": "15252", "city": "North Lilly",
-		"country_code": "SE", "country": "Sweden"
+		"address": "87257 Orrin Stravenue Apt. 215",
+		"postcode": "15252",
+		"city": "North Lilly",
+		"country_code": "SE",
+		"country": "Sweden"
 	},
 	"supplier": {
 		"supplier_id": "50217314",
