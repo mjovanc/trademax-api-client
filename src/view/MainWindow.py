@@ -5,11 +5,10 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QMessageBox, QListWidgetItem, QWidget
 from requests import HTTPError
+from model.TrademaxAPI import TrademaxAPI
 
 import logging
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
-
-from model.TrademaxAPI import TrademaxAPI
 
 
 class AboutWidget(QtWidgets.QWidget):
@@ -123,7 +122,7 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
 
         for p in self.purchase_orders:
             if p['acknowledged_at'] is None:
-                x = self.trademax_api.post_purchase_order_acknowledgement(
+                self.trademax_api.post_purchase_order_acknowledgement(
                     p['purchase_order_id'],
                     now.strftime("%Y-%m-%dT%H:%M:%S%z"))
 
