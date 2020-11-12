@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>900</height>
+    <height>1000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
       <x>10</x>
       <y>510</y>
       <width>801</width>
-      <height>111</height>
+      <height>141</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -46,6 +46,16 @@
        </property>
        <property name="text">
         <string>Öppna</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_acknowledge_all_purchase_orders">
+       <property name="styleSheet">
+        <string notr="true">min-height: 1.5em;</string>
+       </property>
+       <property name="text">
+        <string>Bekräfta alla inköpsordrar</string>
        </property>
       </widget>
      </item>

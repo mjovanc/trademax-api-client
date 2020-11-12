@@ -1,118 +1,165 @@
-import sys
+import datetime
+
+import pytz
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QListWidgetItem, QMessageBox, QWidget, QStackedWidget
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QDesktopServices, QIcon
+from PyQt5.QtWidgets import QMessageBox, QListWidgetItem, QLabel, QWidget
+from requests import HTTPError
+
+import logging
+
+logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
 from model.TrademaxAPI import TrademaxAPI
 
 
-class AboutWidget(QWidget):
+class AboutWidget(QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi('view/about_widget.ui', self)
 
+        self.btn_linkedin.setIcon(QIcon('../../resources/linkedin.png'))
 
-class PurchaseOrderWidget(QStackedWidget):
-    def __init__(self, trademax_api, purchase_order_id, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        uic.loadUi('view/purchase_order_widget.ui', self)
-        self.trademax_api = trademax_api
-        self.order = self.trademax_api.get_purchase_order(purchase_order_id)
-        self.purchase_order = self.order[0]
+        # Event listeners
+        self.btn_linkedin.clicked.connect(self.open_browser_linkedin)
+        self.btn_github.clicked.connect(self.open_browser_github)
+        self.btn_facebook.clicked.connect(self.open_browser_facebook)
 
-        self.set_intial_data()
+    def open_browser_linkedin(self):
+        url = QUrl('https://www.linkedin.com/in/marcuscvjeticanin/')
+        QDesktopServices.openUrl(url)
 
-    def set_intial_data(self):
-        self.purchase_order_id.setText(self.purchase_order['purchase_order_id'])
-        self.created_at.setText(self.purchase_order['created_at'])
-        self.acknowledged_at.setText(self.purchase_order['acknowledged_at'])
-        self.requested_delivery_from.setText(self.purchase_order['requested_delivery_from'])
-        self.requested_delivery_to.setText(self.purchase_order['requested_delivery_to'])
-        self.gross_amount.setValue(self.purchase_order['gross_amount'])
-        self.tax_amount.setValue(self.purchase_order['tax_amount'])
-        self.total_amount.setValue(self.purchase_order['total_amount'])
+    def open_browser_github(self):
+        url = QUrl('https://github.com/mjovanc')
+        QDesktopServices.openUrl(url)
 
-        # Delivery Address
-        self.delivery_address_name.setText(self.purchase_order['delivery_address']['name'])
-        self.delivery_address_phone.setText(self.purchase_order['delivery_address']['phone'])
-        self.delivery_address_email.setText(self.purchase_order['delivery_address']['email'])
-        self.delivery_address_address.setText(self.purchase_order['delivery_address']['address'])
-        self.delivery_address_postcode.setText(self.purchase_order['delivery_address']['postcode'])
-        self.delivery_address_city.setText(self.purchase_order['delivery_address']['city'])
-        self.delivery_address_country.setText(self.purchase_order['delivery_address']['country'])
-
-        # Lines
-        self.item_no.setText(self.purchase_order['lines'][0]['item_no'])
-        self.lines_line_number.setValue(self.purchase_order['lines'][0]['line_no'])
-        self.supplier_item_no.setText(self.purchase_order['lines'][0]['supplier_item_no'])
-        self.lines_quantity.setValue(self.purchase_order['lines'][0]['quantity'])
-        self.lines_quantity_accepted.setValue(self.purchase_order['lines'][0]['quantity_accepted'])
-        self.lines_quantity_dispatched.setValue(self.purchase_order['lines'][0]['quantity_dispatched'])
-        self.lines_quantity_received.setValue(self.purchase_order['lines'][0]['quantity_received'])
-        self.units.setText(self.purchase_order['lines'][0]['units'])
-        self.lines_gross_price.setValue(self.purchase_order['lines'][0]['gross_price'])
-        self.lines_tax_percentage.setValue(self.purchase_order['lines'][0]['tax_percentage'])
-        self.lines_gross_amount.setValue(self.purchase_order['lines'][0]['gross_amount'])
-        self.lines_tax_amount.setValue(self.purchase_order['lines'][0]['tax_amount'])
-        self.lines_total_amount.setValue(self.purchase_order['lines'][0]['total_amount'])
-        self.confirmed_delivery_from.setText(self.purchase_order['lines'][0]['confirmed_delivery_from'])
-        self.confirmed_delivery_to.setText(self.purchase_order['lines'][0]['confirmed_delivery_to'])
+    def open_browser_facebook(self):
+        url = QUrl('https://www.facebook.com/mjovanc')
+        QDesktopServices.openUrl(url)
 
 
-class PurchaseOrdersWidget(QStackedWidget):
+class PurchaseOrdersWidget(QtWidgets.QWidget):
     def __init__(self, trademax_api, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        uic.loadUi('view/purchase_orders_stackedwidget.ui', self)
-        self.trademax_api = trademax_api
+        uic.loadUi('view/purchase_orders_widget.ui', self)
 
-        self.purchase_orders = self.trademax_api.get_all_purchase_orders()
-        self.purchase_order_id = ''
+        # Use TrademaxAPI object
+        # self.trademax_api = trademax_api
+        # self.purchase_orders = self.trademax_api.get_all_purchase_orders()
+        # self.purchase_order_id = ''
 
-        self.set_intial_list_data()
-        self.btn_open.clicked.connect(self.open_purchase_order)
-
-    def go_to_purchase_order_page(self):
-        self.setCurrentIndex(1)
+        # Initialize the list data
+        # self.set_intial_list_data()
+        # self.btn_open.clicked.connect(self.open_purchase_order)
+        # self.btn_acknowledge_all_purchase_orders.clicked.connect(self.acknowledge_purchase_orders)
 
     def set_intial_list_data(self):
         for p in self.purchase_orders:
             self.purchase_orders_list.addItem(QListWidgetItem(p['purchase_order_id']))
 
-    def open_purchase_order(self):
-        # somewhere here I think we have to run the acknowledge the order (or maybe when we are
-        # viewing the order details
-        self.purchase_order_id = self.purchase_orders_list.currentItem().text()
+    def acknowledge_purchase_orders(self):
+        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
 
-        self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
+        for p in self.purchase_orders:
+            if p['acknowledged_at'] is None:
+                x = self.trademax_api.post_purchase_order_acknowledgement(
+                    p['purchase_order_id'],
+                    now.strftime("%Y-%m-%dT%H:%M:%S%z"))
+
+        # self.show_popup('Purchase Orders Acknowledged',
+        #                'All purchase orders were acknowledged without any problems.')
+
+        testing = self.trademax_api.get_all_purchase_orders()
+        for p in testing:
+            print(p['acknowledged_at'])
+
+    def open_purchase_order(self):
+        self.purchase_order_id = self.purchase_orders_list.currentItem().text()
+        # self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
         self.addWidget(self.purchase_order_widget)
 
-        self.go_to_purchase_order_page()
+    def show_popup(self, title, text):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(text)
+        msg.setIcon(QMessageBox.Question)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
 
 
-class MainWindow(QStackedWidget):
+class StartWidget(QtWidgets.QWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi('view/start_widget.ui', self)
+
+
+class Window(QtWidgets.QMainWindow):
+    WINDOW_TITLE = 'Trademax API Client'
+
     def __init__(self):
         super().__init__()
-        uic.loadUi('view/main_view_stackedwidget.ui', self)
-        self.trademax_api = TrademaxAPI()
+        uic.loadUi('view/main_window.ui', self)
 
-        # Adding widgets to the StackedWidget
-        self.purchase_orders_widget = PurchaseOrdersWidget(self.trademax_api)
-        self.addWidget(self.purchase_orders_widget)
+        self.setWindowTitle(self.WINDOW_TITLE)
+        self.stacked_widget = QtWidgets.QStackedWidget()
 
-        self.about_widget = AboutWidget()
-        self.addWidget(self.about_widget)
+        try:
+            self.trademax_api = TrademaxAPI()
+            self.stacked_widget.addWidget(PurchaseOrdersWidget(self.trademax_api))
+        except HTTPError as e:
+            # Adding a dummy QWidget to keep the index correct
+            self.stacked_widget.addWidget(QWidget())
+
+            # Set the Purchase Order button inactive
+            self.btn_purchase_orders.setEnabled(False)
+
+            # Adding logging
+            now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
+            date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
+            logging.critical('{0}: {1}'.format(date_and_time, e))
+
+
 
         # Event listeners
-        self.btn_purchase_orders.clicked.connect(self.go_to_purchase_orders_page)
-        self.btn_about.clicked.connect(self.go_to_about_page)
+        self.btn_purchase_orders.clicked.connect(self.__go_to_purchase_orders)
+        self.btn_about.clicked.connect(self.__go_to_about)
+        self.btn_back.clicked.connect(self.__go_to_start)
 
-    def go_to_purchase_orders_page(self):
-        self.setCurrentIndex(1)
+        # Setting up layout for switching widgets
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.stacked_widget)
+        layout.addWidget(self.btn_purchase_orders)
+        layout.addWidget(self.btn_about)
+        layout.addWidget(self.btn_back)
 
-    def go_to_about_page(self):
-        self.setCurrentIndex(2)
+        widget = QtWidgets.QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
 
+        # Adding widgets to the StackedWidget
+        self.stacked_widget.addWidget(StartWidget())
+        self.stacked_widget.addWidget(AboutWidget())
 
-app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec_()
+        # Setting correct index to start with
+        self.stacked_widget.setCurrentIndex(1)
+
+    def __next_page(self):
+        # could maybe be useful for the purchase orders list page
+        idx = self.stacked_widget.currentIndex()
+        if idx < self.stacked_widget.count() - 1:
+            self.stacked_widget.setCurrentIndex(idx + 1)
+        else:
+            self.stacked_widget.setCurrentIndex(0)
+
+    def __go_to_purchase_orders(self):
+        self.setWindowTitle(self.WINDOW_TITLE + ' - ' + self.btn_purchase_orders.text())
+        self.stacked_widget.setCurrentIndex(0)
+
+    def __go_to_about(self):
+        self.setWindowTitle(self.WINDOW_TITLE + ' - ' + self.btn_about.text())
+        self.stacked_widget.setCurrentIndex(2)
+
+    def __go_to_start(self):
+        self.setWindowTitle(self.WINDOW_TITLE)
+        self.stacked_widget.setCurrentIndex(1)

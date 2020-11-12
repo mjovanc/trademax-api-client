@@ -1,9 +1,17 @@
-from view.MainWindow import MainWindow
+import sys
+
+from PyQt5 import QtWidgets, uic
+
+from view.MainWindow import Window
 
 
 def main():
-    MainWindow()
+    app = QtWidgets.QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':
     main()
+
