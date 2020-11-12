@@ -1,20 +1,21 @@
 import datetime
-
 import pytz
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon
-from PyQt5.QtWidgets import QMessageBox, QListWidgetItem, QLabel, QWidget
+from PyQt5.QtWidgets import QMessageBox, QListWidgetItem, QWidget
 from requests import HTTPError
 
 import logging
-
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
 from model.TrademaxAPI import TrademaxAPI
 
 
 class AboutWidget(QtWidgets.QWidget):
+    """
+    Widget to display information about the application
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi('view/about_widget.ui', self)
@@ -27,19 +28,25 @@ class AboutWidget(QtWidgets.QWidget):
         self.btn_facebook.clicked.connect(self.open_browser_facebook)
 
     def open_browser_linkedin(self):
+        """Opens the LinkedIn link in default browser of OS."""
         url = QUrl('https://www.linkedin.com/in/marcuscvjeticanin/')
         QDesktopServices.openUrl(url)
 
     def open_browser_github(self):
+        """Opens the GitHub link in default browser of OS."""
         url = QUrl('https://github.com/mjovanc')
         QDesktopServices.openUrl(url)
 
     def open_browser_facebook(self):
+        """Opens the Facebook link in default browser of OS."""
         url = QUrl('https://www.facebook.com/mjovanc')
         QDesktopServices.openUrl(url)
 
 
 class PurchaseOrdersWidget(QtWidgets.QWidget):
+    """
+    Widget to display the Purchase Orders
+    """
     def __init__(self, trademax_api, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi('view/purchase_orders_widget.ui', self)
@@ -55,10 +62,12 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
         # self.btn_acknowledge_all_purchase_orders.clicked.connect(self.acknowledge_purchase_orders)
 
     def set_intial_list_data(self):
+        """Sets the initial list data of purchase orders."""
         for p in self.purchase_orders:
             self.purchase_orders_list.addItem(QListWidgetItem(p['purchase_order_id']))
 
     def acknowledge_purchase_orders(self):
+        """Acknowledges all the available purchase orders."""
         now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
 
         for p in self.purchase_orders:
@@ -75,11 +84,13 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
             print(p['acknowledged_at'])
 
     def open_purchase_order(self):
+        """Opens a Purchase Order."""
         self.purchase_order_id = self.purchase_orders_list.currentItem().text()
         # self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
         self.addWidget(self.purchase_order_widget)
 
     def show_popup(self, title, text):
+        """Displays a popup to the user."""
         msg = QMessageBox()
         msg.setWindowTitle(title)
         msg.setText(text)
@@ -89,12 +100,18 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
 
 
 class StartWidget(QtWidgets.QWidget):
+    """
+    Widget to display starting page
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi('view/start_widget.ui', self)
 
 
 class Window(QtWidgets.QMainWindow):
+    """
+    The Main Window
+    """
     WINDOW_TITLE = 'Trademax API Client'
 
     def __init__(self):
@@ -118,8 +135,6 @@ class Window(QtWidgets.QMainWindow):
             now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
             date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
             logging.critical('{0}: {1}'.format(date_and_time, e))
-
-
 
         # Event listeners
         self.btn_purchase_orders.clicked.connect(self.__go_to_purchase_orders)
@@ -145,6 +160,7 @@ class Window(QtWidgets.QMainWindow):
         self.stacked_widget.setCurrentIndex(1)
 
     def __next_page(self):
+        """Switches to the next Purchase Order Widget."""
         # could maybe be useful for the purchase orders list page
         idx = self.stacked_widget.currentIndex()
         if idx < self.stacked_widget.count() - 1:
@@ -153,13 +169,16 @@ class Window(QtWidgets.QMainWindow):
             self.stacked_widget.setCurrentIndex(0)
 
     def __go_to_purchase_orders(self):
+        """Switches to the Purchase Orders Widget."""
         self.setWindowTitle(self.WINDOW_TITLE + ' - ' + self.btn_purchase_orders.text())
         self.stacked_widget.setCurrentIndex(0)
 
     def __go_to_about(self):
+        """Switches to the About Widget."""
         self.setWindowTitle(self.WINDOW_TITLE + ' - ' + self.btn_about.text())
         self.stacked_widget.setCurrentIndex(2)
 
     def __go_to_start(self):
+        """Switches to the Start Widget."""
         self.setWindowTitle(self.WINDOW_TITLE)
         self.stacked_widget.setCurrentIndex(1)

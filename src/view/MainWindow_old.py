@@ -2,9 +2,9 @@ import sys
 import datetime
 import pytz as pytz
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import QObject, pyqtSignal, QThread, QUrl
+from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon
-from PyQt5.QtWidgets import QListWidgetItem, QMessageBox, QWidget, QStackedWidget, QApplication
+from PyQt5.QtWidgets import QListWidgetItem, QMessageBox, QWidget, QStackedWidget
 from requests import HTTPError
 
 import logging
@@ -125,7 +125,7 @@ class PurchaseOrdersWidget(QStackedWidget):
                     p['purchase_order_id'],
                     now.strftime("%Y-%m-%dT%H:%M:%S%z"))
 
-        #self.show_popup('Purchase Orders Acknowledged',
+        # self.show_popup('Purchase Orders Acknowledged',
         #                'All purchase orders were acknowledged without any problems.')
 
         testing = self.trademax_api.get_all_purchase_orders()
@@ -182,6 +182,7 @@ class MainWindow(QStackedWidget):
 
     def go_to_about_page(self):
         self.setCurrentIndex(2)
+
 
 # Look over this if this should be here
 app = QtWidgets.QApplication(sys.argv)
