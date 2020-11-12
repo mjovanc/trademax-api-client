@@ -102,14 +102,14 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
         uic.loadUi('view/purchase_orders_widget.ui', self)
 
         # Use TrademaxAPI object
-        # self.trademax_api = trademax_api
-        # self.purchase_orders = self.trademax_api.get_all_purchase_orders()
-        # self.purchase_order_id = ''
+        self.trademax_api = trademax_api
+        self.purchase_orders = self.trademax_api.get_all_purchase_orders()
+        self.purchase_order_id = ''
 
         # Initialize the list data
-        # self.set_intial_list_data()
-        # self.btn_open.clicked.connect(self.open_purchase_order)
-        # self.btn_acknowledge_all_purchase_orders.clicked.connect(self.acknowledge_purchase_orders)
+        self.set_intial_list_data()
+        self.btn_open.clicked.connect(self.open_purchase_order)
+        self.btn_acknowledge_all_purchase_orders.clicked.connect(self.acknowledge_purchase_orders)
 
     def set_intial_list_data(self):
         """Sets the initial list data of purchase orders."""
@@ -136,7 +136,7 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
     def open_purchase_order(self):
         """Opens a Purchase Order."""
         self.purchase_order_id = self.purchase_orders_list.currentItem().text()
-        # self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
+        self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
         self.addWidget(self.purchase_order_widget)
 
     def show_popup(self, title, text):

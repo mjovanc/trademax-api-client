@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>purchase_orders_list</class>
- <widget class="QWidget" name="purchase_orders_list">
+ <class>purchase_orders_list_widget</class>
+ <widget class="QWidget" name="purchase_orders_list_widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,7 +24,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListWidget" name="purchase_orders_list_2"/>
+     <widget class="QListWidget" name="purchase_orders_list"/>
     </item>
    </layout>
   </widget>
