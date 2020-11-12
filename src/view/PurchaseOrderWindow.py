@@ -47,27 +47,6 @@ class PurchaseOrderWindow(QtWidgets.QMainWindow):
             date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
             logging.critical('{0}: {1}'.format(date_and_time, e))
 
-        # Event listeners
-        self.btn_next.clicked.connect(self.__next_page)
-        self.btn_back.clicked.connect(self.__go_back)
-
-        # Setting up layout for switching widgets
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.stacked_widget)
-        layout.addWidget(self.btn_next)
-        layout.addWidget(self.btn_back)
-
-        widget = QtWidgets.QWidget()
-        widget.setLayout(layout)
-        self.setCentralWidget(widget)
-
-        # Adding widgets to the StackedWidget
-        self.stacked_widget.addWidget(TestWidget())
-        # self.stacked_widget.addWidget(AboutWidget())
-
-        # Setting correct index to start with
-        self.stacked_widget.setCurrentIndex(0)
-
     def __next_page(self):
         """Switches to the next Widget."""
         # could maybe be useful for the purchase orders list page

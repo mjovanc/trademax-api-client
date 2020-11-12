@@ -139,7 +139,6 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
     def open_purchase_order(self):
         """Opens a Purchase Order."""
         self.purchase_order_id = self.purchase_orders_list.currentItem().text()
-
         w = PurchaseOrderWindow(self.purchase_order_id)
         w.show()
 

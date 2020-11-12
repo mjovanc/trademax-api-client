@@ -75,6 +75,9 @@
           </layout>
          </item>
          <item>
+          <layout class="QVBoxLayout" name="vl4"/>
+         </item>
+         <item>
           <widget class="QLabel" name="logo">
            <property name="minimumSize">
             <size>
