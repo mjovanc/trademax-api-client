@@ -43,9 +43,60 @@ class AboutWidget(QtWidgets.QWidget):
         QDesktopServices.openUrl(url)
 
 
+class PurchaseOrderWidget(QtWidgets.QWidget):
+    """
+    Widget to display a single Purchase Order.
+    """
+    def __init__(self, trademax_api, purchase_order_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi('view/purchase_order_widget.ui', self)
+        self.order = trademax_api.get_purchase_order(purchase_order_id)
+        self.purchase_order = self.order[0]
+        print(self.purchase_order)
+
+        self.set_intial_data()
+
+    def set_intial_data(self):
+        """Sets the intial data to the purchase order fields."""
+        self.purchase_order_id.setText(self.purchase_order['purchase_order_id'])
+        self.created_at.setText(self.purchase_order['created_at'])
+        self.acknowledged_at.setText(self.purchase_order['acknowledged_at'])
+        self.requested_delivery_from.setText(self.purchase_order['requested_delivery_from'])
+        self.requested_delivery_to.setText(self.purchase_order['requested_delivery_to'])
+        self.gross_amount.setValue(self.purchase_order['gross_amount'])
+        self.tax_amount.setValue(self.purchase_order['tax_amount'])
+        self.total_amount.setValue(self.purchase_order['total_amount'])
+
+        # Delivery Address
+        self.delivery_address_name.setText(self.purchase_order['delivery_address']['name'])
+        self.delivery_address_phone.setText(self.purchase_order['delivery_address']['phone'])
+        self.delivery_address_email.setText(self.purchase_order['delivery_address']['email'])
+        self.delivery_address_address.setText(self.purchase_order['delivery_address']['address'])
+        self.delivery_address_postcode.setText(self.purchase_order['delivery_address']['postcode'])
+        self.delivery_address_city.setText(self.purchase_order['delivery_address']['city'])
+        self.delivery_address_country.setText(self.purchase_order['delivery_address']['country'])
+
+        # Lines
+        self.item_no.setText(self.purchase_order['lines'][0]['item_no'])
+        self.lines_line_number.setValue(self.purchase_order['lines'][0]['line_no'])
+        self.supplier_item_no.setText(self.purchase_order['lines'][0]['supplier_item_no'])
+        self.lines_quantity.setValue(self.purchase_order['lines'][0]['quantity'])
+        self.lines_quantity_accepted.setValue(self.purchase_order['lines'][0]['quantity_accepted'])
+        self.lines_quantity_dispatched.setValue(self.purchase_order['lines'][0]['quantity_dispatched'])
+        self.lines_quantity_received.setValue(self.purchase_order['lines'][0]['quantity_received'])
+        self.units.setText(self.purchase_order['lines'][0]['units'])
+        self.lines_gross_price.setValue(self.purchase_order['lines'][0]['gross_price'])
+        self.lines_tax_percentage.setValue(self.purchase_order['lines'][0]['tax_percentage'])
+        self.lines_gross_amount.setValue(self.purchase_order['lines'][0]['gross_amount'])
+        self.lines_tax_amount.setValue(self.purchase_order['lines'][0]['tax_amount'])
+        self.lines_total_amount.setValue(self.purchase_order['lines'][0]['total_amount'])
+        self.confirmed_delivery_from.setText(self.purchase_order['lines'][0]['confirmed_delivery_from'])
+        self.confirmed_delivery_to.setText(self.purchase_order['lines'][0]['confirmed_delivery_to'])
+
+
 class PurchaseOrdersWidget(QtWidgets.QWidget):
     """
-    Widget to display the Purchase Orders
+    Widget to display the Purchase Orders.
     """
     def __init__(self, trademax_api, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -101,7 +152,7 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
 
 class StartWidget(QtWidgets.QWidget):
     """
-    Widget to display starting page
+    Widget to display starting page.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,7 +161,7 @@ class StartWidget(QtWidgets.QWidget):
 
 class Window(QtWidgets.QMainWindow):
     """
-    The Main Window
+    The Main Window.
     """
     WINDOW_TITLE = 'Trademax API Client'
 
