@@ -8,6 +8,9 @@ from requests import HTTPError
 from model.TrademaxAPI import TrademaxAPI
 
 import logging
+
+from view.PurchaseOrderWindow import PurchaseOrderWindow
+
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
 
@@ -136,8 +139,9 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
     def open_purchase_order(self):
         """Opens a Purchase Order."""
         self.purchase_order_id = self.purchase_orders_list.currentItem().text()
-        self.purchase_order_widget = PurchaseOrderWidget(self.trademax_api, self.purchase_order_id)
-        self.addWidget(self.purchase_order_widget)
+
+        w = PurchaseOrderWindow(self.purchase_order_id)
+        w.show()
 
     def show_popup(self, title, text):
         """Displays a popup to the user."""
@@ -167,7 +171,6 @@ class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('view/main_window.ui', self)
-
         self.setWindowTitle(self.WINDOW_TITLE)
         self.stacked_widget = QtWidgets.QStackedWidget()
 
@@ -232,3 +235,5 @@ class Window(QtWidgets.QMainWindow):
         """Switches to the Start Widget."""
         self.setWindowTitle(self.WINDOW_TITLE)
         self.stacked_widget.setCurrentIndex(1)
+
+
