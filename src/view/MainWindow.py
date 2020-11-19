@@ -9,7 +9,7 @@ from model.TrademaxAPI import TrademaxAPI
 
 import logging
 
-from view.PurchaseOrderWindow import PurchaseOrderWindow
+from view.PurchaseOrderWindow import PurchaseOrderWindow, AnotherWindow
 
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
@@ -136,10 +136,12 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
         for p in testing:
             print(p['acknowledged_at'])
 
-    def open_purchase_order(self):
+    def open_purchase_order(self, checked):
         """Opens a Purchase Order."""
         self.purchase_order_id = self.purchase_orders_list.currentItem().text()
-        w = PurchaseOrderWindow(self.purchase_order_id)
+        #new_window = PurchaseOrderWindow(self.purchase_order_id)
+        #new_window.show()
+        w = AnotherWindow()
         w.show()
 
     def show_popup(self, title, text):
@@ -161,15 +163,16 @@ class StartWidget(QtWidgets.QWidget):
         uic.loadUi('view/start_widget.ui', self)
 
 
-class Window(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     """
     The Main Window.
     """
     WINDOW_TITLE = 'Trademax API Client'
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         uic.loadUi('view/main_window.ui', self)
+
         self.setWindowTitle(self.WINDOW_TITLE)
         self.stacked_widget = QtWidgets.QStackedWidget()
 

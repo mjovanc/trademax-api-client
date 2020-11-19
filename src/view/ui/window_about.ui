@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>test_widget</class>
- <widget class="QWidget" name="test_widget">
+ <class>AboutWindow</class>
+ <widget class="QWidget" name="AboutWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,14 +16,14 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>140</y>
-     <width>141</width>
-     <height>61</height>
+     <x>180</x>
+     <y>160</y>
+     <width>67</width>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Test Widget</string>
+    <string>Test hehe</string>
    </property>
   </widget>
  </widget>

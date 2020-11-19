@@ -6,38 +6,38 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btn_back">
+   <widget class="QPushButton" name="btn_purchase_orders">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>160</y>
-      <width>89</width>
-      <height>25</height>
+      <x>190</x>
+      <y>130</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Back</string>
+     <string>Inköpsordrar</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_next">
+   <widget class="QPushButton" name="btn_about">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>180</y>
-      <width>89</width>
-      <height>25</height>
+      <x>400</x>
+      <y>130</y>
+      <width>201</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Next</string>
+     <string>Om applikationen</string>
     </property>
    </widget>
   </widget>
@@ -46,7 +46,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1600</width>
      <height>22</height>
     </rect>
    </property>

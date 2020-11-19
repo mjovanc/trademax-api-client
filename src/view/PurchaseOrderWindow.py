@@ -1,12 +1,25 @@
 import datetime
 import pytz
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMessageBox, QWidget
+from PyQt5.QtWidgets import QMessageBox, QWidget, QVBoxLayout, QLabel, QGridLayout
 from requests import HTTPError
 from model.TrademaxAPI import TrademaxAPI
 
 import logging
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
+
+
+class AnotherWindow(QWidget):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+    def __init__(self, parent=None):
+        super().__init__(None)
+        layout = QVBoxLayout()
+        self.label = QLabel("Another Window")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
 
 class TestWidget(QtWidgets.QWidget):
@@ -24,9 +37,10 @@ class PurchaseOrderWindow(QtWidgets.QMainWindow):
     """
     WINDOW_TITLE = 'Trademax API Client - Purchase Order'
 
-    def __init__(self, purchase_order_id, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, purchase_order_id):
+        super().__init__()
         uic.loadUi('view/purchase_order_window.ui', self)
+
         self.setWindowTitle(self.WINDOW_TITLE)
         self.stacked_widget = QtWidgets.QStackedWidget()
 
