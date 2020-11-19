@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QListWidgetItem
+from PyQt5.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 
 from model.TrademaxAPI import TrademaxAPI
 from view.PurchaseOrderWindow import PurchaseOrderWindow
@@ -34,6 +34,7 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
         self.btn_reject.clicked.connect(self.reject_purchase_order)
 
     def toggle_purchase_order_window(self, checked):
+        """Toggles the purchase order window."""
         self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
         self.window_purchase_order = PurchaseOrderWindow(self.purchase_order_id)
 
@@ -42,18 +43,26 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
         else:
             self.window_purchase_order.show()
 
+    def show_popup(self, title, text):
+        """Displays a popup."""
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(text)
+        msg.setIcon(QMessageBox.Question)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
+
     def acknowledge_purchase_order(self):
-        """
-        Acknowledge a selected Purchase Order.
-        """
+        """Acknowledge a selected Purchase Order."""
         self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
         self.trademax_api.post_purchase_order_acknowledgement(self.purchase_order_id)
+        self.show_popup('Purchase Order Acknowledged',
+                        'The selected purchase order is now acknowledged.')
 
     def reject_purchase_order(self):
-        """
-        Rejects a selected Purchase Order.
-        """
+        """Rejects a selected Purchase Order."""
         self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
-        # Do not work at the moment, need to implement a reject method in Trademax API
-        # self.trademax_api.post_reject_purchase_order(self.purchase_order_id)
+        # Do not work at the moment
+        # post_purchase_order_response should be used
+        # self.trademax_api.post_purchase_order_response()
 

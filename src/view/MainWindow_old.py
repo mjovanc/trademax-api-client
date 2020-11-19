@@ -119,48 +119,6 @@ class PurchaseOrdersWidget(QtWidgets.QWidget):
         for p in self.purchase_orders:
             self.purchase_orders_list.addItem(QListWidgetItem(p['purchase_order_id']))
 
-    def acknowledge_purchase_orders(self):
-        """Acknowledges all the available purchase orders."""
-        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
-
-        for p in self.purchase_orders:
-            if p['acknowledged_at'] is None:
-                self.trademax_api.post_purchase_order_acknowledgement(
-                    p['purchase_order_id'],
-                    now.strftime("%Y-%m-%dT%H:%M:%S%z"))
-
-        # self.show_popup('Purchase Orders Acknowledged',
-        #                'All purchase orders were acknowledged without any problems.')
-
-        testing = self.trademax_api.get_all_purchase_orders()
-        for p in testing:
-            print(p['acknowledged_at'])
-
-    def open_purchase_order(self, checked):
-        """Opens a Purchase Order."""
-        self.purchase_order_id = self.purchase_orders_list.currentItem().text()
-        #new_window = PurchaseOrderWindow(self.purchase_order_id)
-        #new_window.show()
-        w = AnotherWindow()
-        w.show()
-
-    def show_popup(self, title, text):
-        """Displays a popup to the user."""
-        msg = QMessageBox()
-        msg.setWindowTitle(title)
-        msg.setText(text)
-        msg.setIcon(QMessageBox.Question)
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec_()
-
-
-class StartWidget(QtWidgets.QWidget):
-    """
-    Widget to display starting page.
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        uic.loadUi('view/start_widget.ui', self)
 
 
 class MainWindow(QtWidgets.QMainWindow):

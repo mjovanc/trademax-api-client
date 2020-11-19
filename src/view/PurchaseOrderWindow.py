@@ -17,4 +17,5 @@ class PurchaseOrderWindow(QWidget, UIWindow):
         self.setupUi(self)
         self.setWindowTitle(parser.get('default', 'WINDOW_TITLE'))
 
-        print(purchase_order_id)
+        self.order_id = self.label_order_id.text()
+        self.label_order_id.setText(self.order_id + purchase_order_id)

@@ -14,6 +14,7 @@ class TrademaxAPI:
     The TrademaxAPI class to handle all API requests.
     """
 
+    # TODO:Perhaps do this in the __init__ method and use try/catch?
     API_UUID = parser.get('api', 'API_UUID')
     API_PASSWORD = parser.get('api', 'API_PASSWORD')
     API_URL = parser.get('api', 'API_URL')
