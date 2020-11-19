@@ -37,5 +37,8 @@ class PurchaseOrder:
         self.latest = latest
         self.purchase_order_id = purchase_order_id
         self.id = id
+
+    # Logic here in methods that checks that its
+    # not possible to change the total, it should be calculated automatically
         
 

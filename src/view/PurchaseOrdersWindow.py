@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 
+from model.PurchaseOrder import PurchaseOrder
 from model.TrademaxAPI import TrademaxAPI
 from view.PurchaseOrderWindow import PurchaseOrderWindow
 
@@ -25,8 +26,8 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
 
         # Adding list widgets from API
         self.trademax_api = TrademaxAPI()
-        for x in self.trademax_api.get_all_purchase_orders():
-            self.listwidget_purchase_orders.addItem(QListWidgetItem(x['id']))
+        for po in self.trademax_api.get_all_purchase_orders():
+            self.listwidget_purchase_orders.addItem(QListWidgetItem(po['id']))
 
         # Event listeners
         self.btn_open.clicked.connect(self.toggle_purchase_order_window)
@@ -35,9 +36,22 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
 
     def toggle_purchase_order_window(self, checked):
         """Toggles the purchase order window."""
-        self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
-        self.window_purchase_order = PurchaseOrderWindow(self.purchase_order_id)
+        purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
 
+        purchase_order = self.trademax_api.get_purchase_order(purchase_order_id)
+        purchase_order = purchase_order[0]
+        purchase_order_obj = PurchaseOrder(
+            purchase_order['id'], purchase_order['purchase_order_id'],
+            purchase_order['latest'], purchase_order['created_at'],
+            purchase_order['acknowledged_at'], purchase_order['requested_delivery_from'],
+            purchase_order['requested_delivery_to'], purchase_order['currency'],
+            purchase_order['gross_amount'], purchase_order['tax_amount'],
+            purchase_order['total_amount'], purchase_order['is_partial_delivery'],
+            purchase_order['sales_order'], purchase_order['delivery_address'],
+            purchase_order['supplier'], purchase_order['lines']
+        )
+
+        self.window_purchase_order = PurchaseOrderWindow(purchase_order_obj)
         if self.window_purchase_order.isVisible():
             self.window_purchase_order.hide()
         else:

@@ -9,7 +9,6 @@ from model.TrademaxAPI import TrademaxAPI
 
 import logging
 
-from view.PurchaseOrderWindow import PurchaseOrderWindow, AnotherWindow
 
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
