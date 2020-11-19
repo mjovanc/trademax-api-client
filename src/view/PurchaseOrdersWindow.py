@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 
+from model.Line import Line
 from model.PurchaseOrder import PurchaseOrder
 from model.TrademaxAPI import TrademaxAPI
 from view.PurchaseOrderWindow import PurchaseOrderWindow
@@ -37,9 +38,19 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
     def toggle_purchase_order_window(self, checked):
         """Toggles the purchase order window."""
         purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
-
         purchase_order = self.trademax_api.get_purchase_order(purchase_order_id)
         purchase_order = purchase_order[0]
+
+        purchase_order_lines = []
+        for pol in purchase_order['lines']:
+            purchase_order_lines.append(
+                Line(pol['item_no'], pol['supplier_item_no'], pol['line_no'], pol['quantity'],
+                     pol['quantity_accepted'], pol['quantity_dispatched'], pol['quantity_received'],
+                     pol['units'], pol['gross_price'], pol['tax_percentage'], pol['gross_amount'],
+                     pol['tax_amount'], pol['total_amount'], pol['confirmed_delivery_from'],
+                     pol['confirmed_delivery_to'])
+            )
+
         purchase_order_obj = PurchaseOrder(
             purchase_order['id'], purchase_order['purchase_order_id'],
             purchase_order['latest'], purchase_order['created_at'],
@@ -48,7 +59,7 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
             purchase_order['gross_amount'], purchase_order['tax_amount'],
             purchase_order['total_amount'], purchase_order['is_partial_delivery'],
             purchase_order['sales_order'], purchase_order['delivery_address'],
-            purchase_order['supplier'], purchase_order['lines']
+            purchase_order['supplier'], purchase_order_lines
         )
 
         self.window_purchase_order = PurchaseOrderWindow(purchase_order_obj)

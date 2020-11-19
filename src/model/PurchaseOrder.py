@@ -1,4 +1,7 @@
 class PurchaseOrder:
+    """
+    Represents a Purchase Order.
+    """
     id = ''
     purchase_order_id = ''
     latest = False
@@ -14,13 +17,12 @@ class PurchaseOrder:
     sales_order = {}
     delivery_address = {}
     supplier = {}
-    lines = {}
+    lines = []
 
-    def __init__(
-            self, id, purchase_order_id, latest, created_at, acknowledged_at, requested_delivery_from,
-            requested_delivery_to, currency, gross_amount, tax_amount, total_amount, is_partial_delivery,
-            sales_order, delivery_address, supplier, lines
-    ):
+    def __init__(self, id, purchase_order_id, latest, created_at, acknowledged_at,
+                 requested_delivery_from, requested_delivery_to, currency, gross_amount,
+                 tax_amount, total_amount, is_partial_delivery, sales_order,
+                 delivery_address, supplier, lines):
         self.lines = lines
         self.supplier = supplier
         self.delivery_address = delivery_address
