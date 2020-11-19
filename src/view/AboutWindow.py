@@ -15,4 +15,4 @@ class AboutWindow(QWidget, UIWindow):
         super().__init__()
         UIWindow.__init__(self)
         self.setupUi(self)
-        self.setWindowTitle(parser.get('default', 'window_title'))
+        self.setWindowTitle(parser.get('default', 'WINDOW_TITLE'))

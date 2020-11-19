@@ -1,5 +1,12 @@
+import datetime
+from configparser import ConfigParser
+
+import pytz
 import requests
 import json
+
+parser = ConfigParser()
+parser.read('settings.ini')
 
 
 class TrademaxAPI:
@@ -7,9 +14,9 @@ class TrademaxAPI:
     The TrademaxAPI class to handle all API requests.
     """
 
-    API_UUID = '9f54693a-4608-4751-835a-d1e65265d187'
-    API_PASSWORD = 'order@stenexpo.com'
-    API_URL = 'http://api-231.trademax-test.com/v2'
+    API_UUID = parser.get('api', 'API_UUID')
+    API_PASSWORD = parser.get('api', 'API_PASSWORD')
+    API_URL = parser.get('api', 'API_URL')
     TOKEN = ''
 
     def __init__(self):
@@ -86,13 +93,16 @@ class TrademaxAPI:
 
         return all_purchase_orders
 
-    def post_purchase_order_acknowledgement(self, request_id, acknowledged_at):
+    def post_purchase_order_acknowledgement(self, request_id):
         """
         Sends an acknowledgement for one purchase order by doing a POST request.
         """
 
+        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
+        date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
+
         url = self.API_URL + '/purchase-order-acknowledgements'
-        data = {'request_id': request_id, 'acknowledged_at': acknowledged_at}
+        data = {'request_id': request_id, 'acknowledged_at': date_and_time}
         headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
 
         r = requests.post(url, json=data, headers=headers)
