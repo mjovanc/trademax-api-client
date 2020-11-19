@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget
 
 parser = ConfigParser()
 parser.read('settings.ini')

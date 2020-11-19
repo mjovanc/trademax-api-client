@@ -30,15 +30,15 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QListView" name="listView"/>
-    </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="btn_acknowledge_all_orders">
       <property name="text">
        <string>Acknowledge Purchase Orders</string>
       </property>
      </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QListWidget" name="listwidget_purchase_orders"/>
     </item>
    </layout>
   </widget>

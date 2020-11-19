@@ -2,9 +2,10 @@ from configparser import ConfigParser
 
 from PyQt5 import uic
 from PyQt5.QtCore import QStringListModel
-from PyQt5.QtWidgets import QWidget, QGridLayout, QListView, QAbstractItemView, QPushButton
+from PyQt5.QtWidgets import QWidget, QGridLayout, QListView, QAbstractItemView, QPushButton, QListWidgetItem
 
 from model.TrademaxAPI import TrademaxAPI
+from view.PurchaseOrderWindow import PurchaseOrderWindow
 
 parser = ConfigParser()
 parser.read('settings.ini')
@@ -20,37 +21,23 @@ class PurchaseOrdersWindow(QWidget, UIWindow):
         self.setupUi(self)
         self.setWindowTitle(parser.get('default', 'window_title'))
 
-        # self.trademax_api = TrademaxAPI()
-        # self.purchase_orders_list = []
-        #
-        # for x in self.trademax_api.get_all_purchase_orders():
-        #     self.purchase_orders_list.append(x['id'])
+        # Windows
+        self.window_purchase_order = None
 
-        # self.init_ui()
+        self.trademax_api = TrademaxAPI()
 
-    def init_ui(self):
-        layout = QGridLayout()
-
-        self.listview = QListView()  # create listview object
-        self.listview.setEditTriggers(QAbstractItemView.NoEditTriggers) # mask double-click edit listview
-        self.stringlistmodel = QStringListModel()  # Create stringlistmodel object
-        self.stringlistmodel.setStringList(self.purchase_orders_list)  # assign data to model
-        self.listview.setModel(self.stringlistmodel)  # Associate view with model
-        self.stringlistmodel.dataChanged.connect(self.save)
-
-        # Buttons
-        self.btn_open = QPushButton()
-        self.btn_open.setText('Open')
-        self.btn_acknowledge_all_orders = QPushButton()
-        self.btn_acknowledge_all_orders.setText('Acknowledge purchase orders')
+        for x in self.trademax_api.get_all_purchase_orders():
+            self.listwidget_purchase_orders.addItem(QListWidgetItem(x['id']))
 
         # Event listeners
-        # self.btn_open.clicked.connect(self.open_purchase_order)
+        self.btn_open.clicked.connect(self.open_purchase_order)
 
-        layout.addWidget(self.listview, 0, 0)
-        layout.addWidget(self.btn_open, 0, 1)
-        layout.addWidget(self.btn_acknowledge_all_orders, 1, 1)
-        self.setLayout(layout)
+    def toggle_purchase_order_window(self, checked):
+        self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
+        self.window_purchase_order = PurchaseOrderWindow(self.purchase_order_id)
+        self.toggle_purchase_order_window()
 
-    def save(self):
-        self.purchase_orders_list = self.stringlistmodel.stringList()
+        if self.window_purchase_order.isVisible():
+            self.window_purchase_order.hide()
+        else:
+            self.window_purchase_order.show()
