@@ -67,7 +67,7 @@
           <string notr="true">min-height:1.5em;</string>
          </property>
          <property name="text">
-          <string>Inköpsordrar</string>
+          <string>Purchase Orders</string>
          </property>
         </widget>
        </item>
@@ -77,7 +77,7 @@
           <string notr="true">min-height:1.5em;</string>
          </property>
          <property name="text">
-          <string>Om applikationen</string>
+          <string>About</string>
          </property>
         </widget>
        </item>
@@ -102,7 +102,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>../../../resources/logo.png</pixmap>
+        <pixmap>../../../resources/img/logo.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>

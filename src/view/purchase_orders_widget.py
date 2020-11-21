@@ -4,8 +4,8 @@ import logging
 import traceback
 
 from configparser import ConfigParser
-from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QWidget, QListWidgetItem, QMessageBox
+from PyQt5 import uic
+from PyQt5.QtWidgets import QWidget, QListWidgetItem
 from requests import HTTPError
 
 from model.line import Line

@@ -28,10 +28,10 @@ class MainWindow(QMainWindow):
 
         try:
             self.trademax_api = TrademaxAPI()
-        except HTTPError:
+        except (HTTPError, ConnectionError):
             # Sets API status
             api_status = self.label_api_status.text()
-            self.label_api_status.setText(api_status + 'Offline')
+            self.label_api_status.setText(api_status + self.tr('Offline'))
 
             # Adding logging
             now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
@@ -60,12 +60,14 @@ class MainWindow(QMainWindow):
 
     def go_to_purchase_orders(self):
         """Go to purchase orders widget."""
-        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'), 'Purchase orders')
+        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'),
+                                          self.tr('Purchase Orders'))
         self.setWindowTitle(window_title)
         self.stackedwidget.setCurrentIndex(self.widget_po)
 
     def go_to_about(self):
         """Go to about widget."""
-        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'), 'About')
+        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'),
+                                          self.tr('About'))
         self.setWindowTitle(window_title)
         self.stackedwidget.setCurrentIndex(self.widget_about)

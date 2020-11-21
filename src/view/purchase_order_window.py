@@ -5,24 +5,16 @@ from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 parser = ConfigParser()
 parser.read('settings.ini')
 
-qt_creator_file = 'view/ui/window_purchase_order.ui'
-UIWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 
-
-class PurchaseOrderWindow(QWidget, UIWindow):
+class PurchaseOrderWindow(QWidget):
     """
     Displays a Purchase Order Window.
     """
 
     def __init__(self, po_obj):
         super().__init__()
-        UIWindow.__init__(self)
-        self.setupUi(self)
+        uic.loadUi('view/ui/window_purchase_order.ui', self)
         self.po_obj = po_obj
-
-        # Need to include a language file to put the set language code in
-        # settings.ini
-        self.setWindowTitle('Purchase Order: {}'.format(self.po_obj.purchase_order_id))
 
         # Set the order ID in label
         self.order_id = self.label_order_id.text()
@@ -67,6 +59,7 @@ class PurchaseOrderWindow(QWidget, UIWindow):
             self.lineedit_po_s_supplierid.setText(self.po_obj.supplier['supplier_id'])
             self.lineedit_po_s_name.setText(self.po_obj.supplier['name'])
 
+        # TODO:Need to translate these labels below!
         # Lines Tab
         self.tablewidget_lines.setColumnCount(15)
         self.tablewidget_lines.setHorizontalHeaderLabels(
