@@ -28,7 +28,7 @@ class PurchaseOrdersWidget(QWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('view/ui/window_purchase_orders.ui', self)
+        uic.loadUi('view/ui/widget_purchase_orders.ui', self)
 
         # Windows
         self.window_purchase_order = None

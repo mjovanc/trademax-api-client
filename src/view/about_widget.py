@@ -14,7 +14,7 @@ class AboutWidget(QWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('view/ui/window_about.ui', self)
+        uic.loadUi('view/ui/widget_about.ui', self)
 
         # Event listeners
         self.btn_back.clicked.connect(self.parent().go_to_start)
