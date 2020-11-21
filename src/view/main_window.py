@@ -1,9 +1,9 @@
 import datetime
 import logging
 import traceback
-from configparser import ConfigParser
-
 import pytz
+
+from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 from requests import HTTPError
@@ -28,6 +28,8 @@ class MainWindow(QMainWindow):
 
         try:
             self.trademax_api = TrademaxAPI()
+            api_status = self.label_api_status.text()
+            self.label_api_status.setText(api_status + self.tr('Online'))
         except (HTTPError, ConnectionError):
             # Sets API status
             api_status = self.label_api_status.text()
