@@ -1,5 +1,4 @@
 from configparser import ConfigParser
-
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
@@ -11,23 +10,29 @@ UIWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 
 
 class PurchaseOrderWindow(QWidget, UIWindow):
+    """
+    Displays a Purchase Order Window.
+    """
+
     def __init__(self, po_obj):
         super().__init__()
         UIWindow.__init__(self)
         self.setupUi(self)
         self.po_obj = po_obj
 
-        self.setWindowTitle(parser.get('default', 'WINDOW_TITLE'))
+        # Need to include a language file to put the set language code in
+        # settings.ini
+        self.setWindowTitle('Purchase Order: {}'.format(self.po_obj.purchase_order_id))
 
         # Set the order ID in label
         self.order_id = self.label_order_id.text()
         self.label_order_id.setText(self.order_id + self.po_obj.purchase_order_id)
 
-        print(self.po_obj.sales_order)
-
         self.set_form_data()
 
     def set_form_data(self):
+        """Sets the data in the fields in the QWidget."""
+
         # General tab
         self.lineedit_po_id.setText(self.po_obj.purchase_order_id)
         self.lineedit_po_created_at.setText(self.po_obj.created_at)
@@ -62,33 +67,25 @@ class PurchaseOrderWindow(QWidget, UIWindow):
             self.lineedit_po_s_supplierid.setText(self.po_obj.supplier['supplier_id'])
             self.lineedit_po_s_name.setText(self.po_obj.supplier['name'])
 
-        # Lines
-        # Make a table here of Line objects
-        self.tablewidget_lines.setRowCount(len(self.po_obj.lines))
-        self.tablewidget_lines.setColumnCount(2)
+        # Lines Tab
+        self.tablewidget_lines.setColumnCount(15)
+        self.tablewidget_lines.setHorizontalHeaderLabels(
+            ['Item Number', 'Supplier Item Number', "Line Number",
+             'Quantity', 'Quantity Accepted', 'Quantity Dispatched',
+             'Quantity Received', 'Units', 'Gross Price',
+             'Tax %', 'Gross Amount', 'Tax Amount', 'Total Amount',
+             'Confirmed Delivery From', 'Confirmed Delivery To'])
 
-        self.setVerticalHeaderLabels(['Item Number', 'Supplier Item Number', "Cycles / ms",
-             'RAM access time', 'Execution Time Model'])
+        # Adding table rows
+        for line in self.po_obj.lines:
+            self.add_table_row(self.tablewidget_lines, dict(line))
 
-        #for row, line in range(self.po_obj.lines):
-        #    self.tablewidget_lines.setItem(row, 0, QTableWidgetItem("Cell (1,1)"))
-
-
-
-        if self.po_obj.lines is not None:
-            print(self.po_obj.lines)
-            # self.lineedit_po_lines_item_number.setText(self.po_obj.lines['country'])
-            # self.lineedit_po_lines_supplier_item_number.setText(self.po_obj.lines['country'])
-            # self.spinbox_po_lines_line_number.setValue(self.po_obj.lines['country'])
-            # self.spinbox_po_lines_quantity.setValue(self.po_obj.lines['country'])
-            # self.spinbox_po_lines_quantity_accepted.setValue(self.po_obj.lines['country'])
-            # self.spinbox_po_lines_quantity_dispatched.setValue(self.po_obj.lines['country'])
-            # self.spinbox_po_lines_quantity_recieved.setValue(self.po_obj.lines['country'])
-            # self.lineedit_po_lines_units.setText(self.po_obj.lines['country'])
-            # self.doublespinbox_po_lines_price.setValue(self.po_obj.lines['country'])
-            # self.doublespinbox_po_lines_tax_percentage.setValue(self.po_obj.lines['country'])
-            # self.doublespinbox_po_lines_gross_amount.setValue(self.po_obj.lines['country'])
-            # self.doublespinbox_po_lines_tax_amount.setValue(self.po_obj.lines['country'])
-            # self.doublespinbox_po_lines_total_amount.setValue(self.po_obj.lines['country'])
-            # self.lineedit_po_lines_confirmed_delivery_from.setText(self.po_obj.lines['country'])
-            # self.lineedit_po_lines_confirmed_delivery_to.setText(self.po_obj.lines['country'])
+    def add_table_row(self, table, row_data):
+        """Adding table rows."""
+        row = table.rowCount()
+        table.setRowCount(row + 1)
+        col = 0
+        for item in row_data.values():
+            cell = QTableWidgetItem(str(item))
+            table.setItem(row, col, cell)
+            col += 1
