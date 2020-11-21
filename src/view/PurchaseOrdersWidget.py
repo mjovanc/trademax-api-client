@@ -21,7 +21,7 @@ parser = ConfigParser()
 parser.read('settings.ini')
 
 
-class PurchaseOrdersWindow(QWidget):
+class PurchaseOrdersWidget(QWidget):
     """
     Displays Purchase Orders Window.
     """
@@ -29,7 +29,6 @@ class PurchaseOrdersWindow(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         uic.loadUi('view/ui/window_purchase_orders.ui', self)
-        self.setWindowTitle('Purchase Orders')
 
         # Windows
         self.window_purchase_order = None
@@ -49,12 +48,13 @@ class PurchaseOrdersWindow(QWidget):
             self.btn_open.setEnabled(False)
             self.btn_acknowledge.setEnabled(False)
             self.btn_reject.setEnabled(False)
-            self.btn_update.setEnabled(False)
+            self.btn_modify.setEnabled(False)
 
         # Event listeners
         self.btn_open.clicked.connect(self.toggle_purchase_order_window)
         self.btn_acknowledge.clicked.connect(self.acknowledge_purchase_order)
         self.btn_reject.clicked.connect(self.reject_purchase_order)
+        # self.btn_modify.clicked.connect(self.modify_purchase_order)
         self.btn_back.clicked.connect(self.parent().go_to_start)
 
     def toggle_purchase_order_window(self, checked):
