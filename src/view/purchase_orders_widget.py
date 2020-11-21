@@ -8,11 +8,11 @@ from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget, QListWidgetItem, QMessageBox
 from requests import HTTPError
 
-from model.Line import Line
-from model.PurchaseOrder import PurchaseOrder
-from model.TrademaxAPI import TrademaxAPI
-from view.Popup import Popup
-from view.PurchaseOrderWindow import PurchaseOrderWindow
+from model.line import Line
+from model.purchase_order import PurchaseOrder
+from model.trademax_api import TrademaxAPI
+from view.popup import Popup
+from view.purchase_order_window import PurchaseOrderWindow
 
 
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')

@@ -1,6 +1,6 @@
 import unittest
 
-from src.model.TrademaxAPI import TrademaxAPI
+from src.model.trademax_api import TrademaxAPI
 
 
 class APITest(unittest.TestCase):
