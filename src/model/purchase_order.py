@@ -2,6 +2,7 @@ class PurchaseOrder:
     """
     Represents a Purchase Order.
     """
+
     id = ''
     purchase_order_id = ''
     latest = False
@@ -40,7 +41,40 @@ class PurchaseOrder:
         self.purchase_order_id = purchase_order_id
         self.id = id
 
+    @property
+    def gross_amount(self):
+        return self.gross_amount
+
+    @gross_amount.setter
+    def gross_amount(self, val):
+        """Validate that the gross amount is of correct value."""
+        if not (self.total_amount - self.tax_amount) == val:
+            raise ValueError('Gross Amount is not of a correct value.')
+        self.gross_amount = val
+
+    @property
+    def tax_amount(self):
+        return self.tax_amount
+
+    @tax_amount.setter
+    def tax_amount(self, val):
+        """Validate that the tax amount is of correct value."""
+        if not (self.total_amount - self.gross_amount) == val:
+            raise ValueError('Tax Amount is not of a correct value.')
+        self.tax_amount = val
+
+    @property
+    def total_amount(self):
+        return self.total_amount
+
+    @total_amount.setter
+    def total_amount(self, val):
+        """Validate that the total amount is of correct value."""
+        if not (self.gross_amount + self.tax_amount) == val:
+            raise ValueError('Tax Amount is not of a correct value.')
+        self.total_amount = val
+
+
+    # Need to add try/catch when modifying purchase order and dispatch them.
     # Logic here in methods that checks that its
     # not possible to change the total, it should be calculated automatically
-        
-

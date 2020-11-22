@@ -59,15 +59,14 @@ class PurchaseOrderWindow(QWidget):
             self.lineedit_po_s_supplierid.setText(self.po_obj.supplier['supplier_id'])
             self.lineedit_po_s_name.setText(self.po_obj.supplier['name'])
 
-        # TODO:Need to translate these labels below!
         # Lines Tab
         self.tablewidget_lines.setColumnCount(15)
         self.tablewidget_lines.setHorizontalHeaderLabels(
-            ['Item Number', 'Supplier Item Number', "Line Number",
-             'Quantity', 'Quantity Accepted', 'Quantity Dispatched',
-             'Quantity Received', 'Units', 'Gross Price',
-             'Tax %', 'Gross Amount', 'Tax Amount', 'Total Amount',
-             'Confirmed Delivery From', 'Confirmed Delivery To'])
+            [self.tr('Item Number'), self.tr('Supplier Item Number'), self.tr('Line Number'),
+             self.tr('Quantity'), self.tr('Quantity Accepted'), self.tr('Quantity Dispatched'),
+             self.tr('Quantity Received'), self.tr('Units'), self.tr('Gross Price'),
+             self.tr('Tax %'), self.tr('Gross Amount'), self.tr('Tax Amount'), self.tr('Total Amount'),
+             self.tr('Confirmed Delivery From'), self.tr('Confirmed Delivery To')])
 
         # Adding table rows
         for line in self.po_obj.lines:

@@ -3,7 +3,7 @@
 ## About
 
 This GUI application was built specifically for a company called [Stenexpo](https://stenexpo.com).
-The company is a supplier to Trademax. The application communicates to Trademax REST API to be able to
+The company is a supplier to [Trademax](https://trademax.com). The application communicates to Trademax REST API to be able to
 accept, reject or correct a purchase order. 
 
 ## Technologies

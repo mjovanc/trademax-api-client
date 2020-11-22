@@ -74,7 +74,6 @@ class TrademaxAPI:
         r = requests.get(url, json=data, headers=headers).json()
 
         num_pages = r['pagination']['last_page']
-
         all_purchase_orders = []
 
         for page in range(1, num_pages + 1):
@@ -165,8 +164,8 @@ class TrademaxAPI:
         data = {
             'purchase_order_id': purchase_order_id, 'lines': lines,
             'external_reference': external_reference, 'gross_amount': gross_amount,
-            'total_amount': total_amount, 'tax_amount': tax_amount, 'invoice_date': invoice_date,
-            'due_date': due_date
+            'total_amount': total_amount, 'tax_amount': tax_amount,
+            'invoice_date': invoice_date, 'due_date': due_date
         }
         headers = {'Authorization': self.TOKEN, 'Content-Type': 'application/json'}
 
