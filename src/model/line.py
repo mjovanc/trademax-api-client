@@ -43,6 +43,3 @@ class Line:
         """Iterates over all object attributes."""
         for attr, value in self.__dict__.items():
             yield attr, value
-
-        # Make logic here so that it's not possible to assign a false total amount if it's
-        # not actually calculated correctly.

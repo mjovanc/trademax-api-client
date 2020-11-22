@@ -4,7 +4,7 @@
 
 This GUI application was built specifically for a company called [Stenexpo](https://stenexpo.com).
 The company is a supplier to [Trademax](https://trademax.com). The application communicates to Trademax REST API to be able to
-accept, reject or correct a purchase order. 
+accept, reject, correct, dispatch and send invoice of an purchase order.
 
 ## Technologies
 
@@ -27,4 +27,4 @@ For additonal information regarding libraries, see file _requirements.txt_.
 
 ## License
 
-The application is licensed under X. For obtaining a license contact me on [ marcus.cvjeticanin1@gmail.com](mailto:marcus.cvjeticanin1@gmail.com )
+The application is licensed under MIT.

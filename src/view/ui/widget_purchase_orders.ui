@@ -60,16 +60,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_reject">
-        <property name="styleSheet">
-         <string notr="true">min-height:1.5em;</string>
-        </property>
-        <property name="text">
-         <string>Reject</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_acknowledge">
         <property name="styleSheet">
          <string notr="true">min-height:1.5em;</string>
@@ -80,12 +70,22 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_modify">
+       <widget class="QPushButton" name="btn_dispatch">
         <property name="styleSheet">
          <string notr="true">min-height:1.5em;</string>
         </property>
         <property name="text">
-         <string>Modify</string>
+         <string>Dispatch</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_invoice">
+        <property name="styleSheet">
+         <string notr="true">min-height:1.5em;</string>
+        </property>
+        <property name="text">
+         <string>Create Invoice</string>
         </property>
        </widget>
       </item>

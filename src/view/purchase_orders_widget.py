@@ -14,7 +14,6 @@ from model.trademax_api import TrademaxAPI
 from view.popup import Popup
 from view.purchase_order_window import PurchaseOrderWindow
 
-
 logging.basicConfig(level=logging.CRITICAL, filename='critical_errors.log')
 
 parser = ConfigParser()
@@ -47,14 +46,14 @@ class PurchaseOrdersWidget(QWidget):
             # Sets buttons disabled
             self.btn_open.setEnabled(False)
             self.btn_acknowledge.setEnabled(False)
-            self.btn_reject.setEnabled(False)
-            self.btn_modify.setEnabled(False)
+            self.btn_dispatch.setEnalbed(False)
+            self.btn_invoice.setEnalbed(False)
 
         # Event listeners
         self.btn_open.clicked.connect(self.toggle_purchase_order_window)
         self.btn_acknowledge.clicked.connect(self.acknowledge_purchase_order)
-        self.btn_reject.clicked.connect(self.reject_purchase_order)
-        # self.btn_modify.clicked.connect(self.modify_purchase_order)
+        # self.btn_dispatch.clicked.connect()
+        # self.btn_invoice.clicked.connect()
         self.btn_back.clicked.connect(self.parent().go_to_start)
 
     def toggle_purchase_order_window(self, checked):
@@ -100,18 +99,9 @@ class PurchaseOrdersWidget(QWidget):
         try:
             self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
             self.trademax_api.post_purchase_order_acknowledgement(self.purchase_order_id)
-            Popup.show('Purchase Order Acknowledged',
-                            'The selected purchase order is now acknowledged.')
+            Popup.show(self.tr('Purchase Order Acknowledged'),
+                       self.tr('The selected purchase order is now acknowledged.'))
         except AttributeError:
             now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
             date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
             logging.critical('{0}: {1}'.format(date_and_time, traceback.format_exc()))
-
-    def reject_purchase_order(self):
-        """Rejects a selected Purchase Order."""
-        self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
-        # Do not work at the moment
-        # post_purchase_order_response should be used
-        # self.trademax_api.post_purchase_order_response()
-
-
