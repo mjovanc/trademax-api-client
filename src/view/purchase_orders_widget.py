@@ -1,10 +1,5 @@
-import datetime
-import pytz
-import traceback
-
-from configparser import ConfigParser
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QListWidgetItem
+from PyQt5.QtWidgets import QWidget, QListWidgetItem, QInputDialog, QLineEdit
 from requests import HTTPError
 
 from model.line import Line
@@ -14,20 +9,17 @@ from view.dispatch_window import DispatchWindow
 from view.invoice_window import InvoiceWindow
 from view.popup import Popup
 from view.purchase_order_window import PurchaseOrderWindow
-from utils.logging import add_logging_critical
-
-parser = ConfigParser()
-parser.read('settings.ini')
+from utils.logging import add_logging_critical, add_logging_info
 
 
 class PurchaseOrdersWidget(QWidget):
     """
     Displays Purchase Orders Window.
     """
-
     def __init__(self, parent):
         super().__init__(parent)
         uic.loadUi('view/ui/widget_purchase_orders.ui', self)
+        self.current_page = 1
 
         # Windows
         self.window_purchase_order = None
@@ -37,15 +29,22 @@ class PurchaseOrdersWidget(QWidget):
         # Adding list widgets from API
         try:
             self.trademax_api = TrademaxAPI()
-            for po in self.trademax_api.get_all_purchase_orders():
-                self.listwidget_purchase_orders.addItem(QListWidgetItem(po['id']))
+            self.populate_purchase_orders_list(page_no=self.current_page)
+            self.pushbutton_page_forward.setEnabled(False)
+
+            # Setting number of pages
+            self.label_page_no.setText('Page 1/{0}'.format(self.num_pages))
 
             # Event listeners
             self.btn_open.clicked.connect(self.toggle_purchase_order_window)
+            self.btn_open_po_id.clicked.connect(self.open_purchase_order_with_id)
             self.btn_acknowledge.clicked.connect(self.acknowledge_purchase_order)
             self.btn_dispatch.clicked.connect(self.toggle_dispatch_window)
             self.btn_invoice.clicked.connect(self.toggle_invoice_window)
             self.btn_back.clicked.connect(self.parent().go_to_start)
+
+            self.pushbutton_page_back.clicked.connect(self.go_page_back)
+            self.pushbutton_page_forward.clicked.connect(self.go_page_forward)
         except HTTPError:
             add_logging_critical()
 
@@ -54,6 +53,42 @@ class PurchaseOrdersWidget(QWidget):
             self.btn_acknowledge.setEnabled(False)
             self.btn_dispatch.setEnabled(False)
             self.btn_invoice.setEnabled(False)
+
+    def go_page_back(self):
+        if self.current_page != self.num_pages:
+            self.current_page = self.current_page + 1
+            self.populate_purchase_orders_list(page_no=self.current_page)
+            self.label_page_no.setText('Page {0}/{1}'.format(self.current_page, self.num_pages))
+        else:
+            self.pushbutton_page_back.setEnabled(False)
+
+        if self.current_page > 1:
+            self.pushbutton_page_forward.setEnabled(True)
+
+    def go_page_forward(self):
+        if self.current_page > 1:
+            self.current_page = self.current_page - 1
+            self.pushbutton_page_forward.setEnabled(True)
+        if self.current_page == 1:
+            self.pushbutton_page_forward.setEnabled(False)
+
+        self.populate_purchase_orders_list(page_no=self.current_page)
+        self.label_page_no.setText('Page {0}/{1}'.format(self.current_page, self.num_pages))
+
+    def populate_purchase_orders_list(self, page_no):
+        # need to clear the list here
+        self.purchase_orders, self.num_pages = self.trademax_api.get_purchase_orders(page_no)
+
+        print('PAGE NO: ', page_no)
+
+        for po in self.purchase_orders:
+            if po['acknowledged_at'] is None:
+                item = '{0}'.format(po['id'])
+            else:
+                item = '{0} | {1}'.format(po['id'], self.tr('Acknowledged'))
+            self.listwidget_purchase_orders.addItem(
+                QListWidgetItem(item))
+            print(po['id'])
 
     def toggle_purchase_order_window(self, checked):
         """Toggles the purchase order window."""
@@ -81,6 +116,19 @@ class PurchaseOrdersWidget(QWidget):
         except AttributeError:
             add_logging_critical()
 
+    def open_purchase_order_with_id(self):
+        po_id, ok_pressed = QInputDialog.getText(self, self.tr('Open Purchase Order by ID'),
+                                                 self.tr('Enter ID:'), QLineEdit.Normal, '')
+        if ok_pressed and po_id != '':
+            try:
+                self.window_purchase_order = PurchaseOrderWindow(self.get_purchase_order(po_id))
+                self.window_purchase_order.show()
+            except AttributeError:
+                add_logging_critical()
+            except HTTPError:
+                # The HTTPError will most likely be 404 so the logging level is INFO.
+                add_logging_info()
+
     def toggle_invoice_window(self, checked):
         """Toggles the invoice window."""
         try:
@@ -99,8 +147,9 @@ class PurchaseOrdersWidget(QWidget):
         try:
             self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
             self.trademax_api.post_purchase_order_acknowledgement(self.purchase_order_id)
-            Popup.show(self.tr('Purchase Order Acknowledged'),
-                       self.tr('The selected purchase order is now acknowledged.'))
+            popup = Popup(self.tr('Purchase Order Acknowledged'),
+                          self.tr('The selected purchase order is now acknowledged.'))
+            popup.show()
         except AttributeError:
             add_logging_critical()
 

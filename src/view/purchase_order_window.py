@@ -13,7 +13,6 @@ class PurchaseOrderWindow(QWidget):
     """
     Displays a Purchase Order Window.
     """
-
     def __init__(self, po_obj):
         super().__init__()
         uic.loadUi('view/ui/window_purchase_order.ui', self)
@@ -27,7 +26,6 @@ class PurchaseOrderWindow(QWidget):
 
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
-
         # General tab
         self.lineedit_po_id.setText(self.po_obj.purchase_order_id)
         self.lineedit_po_created_at.setText(self.po_obj.created_at)

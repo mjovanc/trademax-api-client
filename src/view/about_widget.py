@@ -6,7 +6,6 @@ class AboutWidget(QWidget):
     """
     Displays the About Widget.
     """
-
     def __init__(self, parent):
         super().__init__(parent)
         uic.loadUi('view/ui/widget_about.ui', self)

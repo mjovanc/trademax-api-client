@@ -1,10 +1,10 @@
 import datetime
 import os
-from configparser import ConfigParser
-
 import pytz
 import requests
 import json
+
+from configparser import ConfigParser
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -53,41 +53,37 @@ class TrademaxAPI:
         else:
             return r.raise_for_status()
 
-    def get_all_purchase_orders(self):
+    def get_purchase_orders(self, page_no):
         """Gets all purchase orders by doing a GET request."""
-        created_date_from = '2020-08-02T12:27:06+02:00'
-        created_date_to = '2020-10-09T12:27:06+02:00'
-        latest = 1
+        created_date_from = '2020-05-06T12:27:06+02:00'  # need to set from date and time (perhaps 1 month (could be set in settings.ini
+        created_date_to = '2020-10-09T12:27:06+02:00'  # need set the current date and time here
+        latest = 0
         per_page = 25
         sales_order_tenant = ''
 
+        # TODO: Can't switch to another page.
         url = self.API_URL + '/purchase-order-requests'
         headers = {'Authorization': self.TOKEN}
+        params = {'pagination': {'current_page': page_no}}
         data = {
             'created_date_from': created_date_from,
             'created_date_to': created_date_to,
             'latest': latest,
             'per_page': per_page,
-            'sales_order_tenant': ''
+            'sales_order_tenant': sales_order_tenant
         }
-        r = requests.get(url, json=data, headers=headers).json()
+        r = requests.get(url, json=data, params=params, headers=headers).json()
 
         num_pages = r['pagination']['last_page']
-        all_purchase_orders = []
+        purchase_orders = []
 
-        for page in range(1, num_pages + 1):
-            # print('PAGE NUMBER : ' + str(page))
+        print(r['pagination'])
 
-            new_req = requests.get(
-                self.API_URL + '/purchase-order-requests',
-                headers={'Authorization': self.TOKEN},
-                params={'current_page': page}).json()
+        for d in r['data']:
+            if d is not None:
+                purchase_orders.append(d)
 
-            for d in new_req['data']:
-                if d is not None:
-                    all_purchase_orders.append(d)
-
-        return all_purchase_orders
+        return sorted(purchase_orders, key=lambda k: k['id'], reverse=True), num_pages
 
     def post_purchase_order_acknowledgement(self, request_id):
         """Sends an acknowledgement for one purchase order by doing a POST request."""
@@ -101,6 +97,7 @@ class TrademaxAPI:
         r = requests.post(url, json=data, headers=headers)
 
         if r.status_code == 201:
+            print(r)
             return r
         else:
             return r.raise_for_status()

@@ -23,7 +23,6 @@ class MainWindow(QMainWindow):
     """
     Displays the Main Window.
     """
-
     def __init__(self):
         super().__init__()
         uic.loadUi('view/ui/window_main.ui', self)

@@ -19,7 +19,7 @@
      <x>20</x>
      <y>120</y>
      <width>821</width>
-     <height>751</height>
+     <height>401</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -34,7 +34,7 @@
      <x>870</x>
      <y>120</y>
      <width>441</width>
-     <height>271</height>
+     <height>401</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -47,6 +47,25 @@
         </property>
         <property name="text">
          <string>Open</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_open_po_id">
+        <property name="styleSheet">
+         <string notr="true">min-height:1.5em;</string>
+        </property>
+        <property name="text">
+         <string>Open a Purchase Order with ID</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -97,7 +116,7 @@
    <property name="geometry">
     <rect>
      <x>870</x>
-     <y>420</y>
+     <y>550</y>
      <width>441</width>
      <height>81</height>
     </rect>
@@ -137,6 +156,45 @@
       </property>
       <property name="text">
        <string>Purchase Orders</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_5">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>550</y>
+     <width>821</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontallayout_pagination">
+    <item>
+     <widget class="QLabel" name="label_page_no">
+      <property name="text">
+       <string>Page 1/X</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushbutton_page_forward">
+      <property name="styleSheet">
+       <string notr="true">min-height:1.5em;</string>
+      </property>
+      <property name="text">
+       <string>&lt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushbutton_page_back">
+      <property name="styleSheet">
+       <string notr="true">min-height:1.5em;</string>
+      </property>
+      <property name="text">
+       <string>&gt;</string>
       </property>
      </widget>
     </item>
