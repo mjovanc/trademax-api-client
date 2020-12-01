@@ -12,6 +12,7 @@ The GUI application for Trademax API Client uses:
 
 * Python 3.8
 * PyQT5 (5.15.1)
+* QT .ui files
 
 For additonal information regarding libraries, see file _requirements.txt_.
 
