@@ -1,9 +1,12 @@
+import os
 from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 parser = ConfigParser()
-parser.read('settings.ini')
+parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class PurchaseOrderWindow(QWidget):

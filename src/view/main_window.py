@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 import traceback
 import pytz
 
@@ -12,8 +13,10 @@ from model.trademax_api import TrademaxAPI
 from view.about_widget import AboutWidget
 from view.purchase_orders_widget import PurchaseOrdersWidget
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 parser = ConfigParser()
-parser.read('settings.ini')
+parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class MainWindow(QMainWindow):

@@ -1,19 +1,21 @@
 import datetime
+import os
 from configparser import ConfigParser
 
 import pytz
 import requests
 import json
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 parser = ConfigParser()
-parser.read('settings.ini')
+parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class TrademaxAPI:
     """
     TrademaxAPI class to handle all API requests.
     """
-
     API_UUID = ''
     API_PASSWORD = ''
     API_URL = ''
@@ -29,7 +31,6 @@ class TrademaxAPI:
 
     def post_token_creation(self):
         """Returns a Bearer authentication token from the Trademax API."""
-
         r = requests.post(self.API_URL + '/jwt-token-get', data={
             'uuid': self.API_UUID,
             'password': self.API_PASSWORD
@@ -42,7 +43,6 @@ class TrademaxAPI:
 
     def get_purchase_order(self, request_id):
         """Returns a single purchase order in JSON object."""
-
         r = requests.get(
             self.API_URL + '/purchase-order-requests/' + request_id,
             headers={'Authorization': self.TOKEN}
@@ -55,7 +55,6 @@ class TrademaxAPI:
 
     def get_all_purchase_orders(self):
         """Gets all purchase orders by doing a GET request."""
-
         created_date_from = '2020-08-02T12:27:06+02:00'
         created_date_to = '2020-10-09T12:27:06+02:00'
         latest = 1
@@ -92,7 +91,6 @@ class TrademaxAPI:
 
     def post_purchase_order_acknowledgement(self, request_id):
         """Sends an acknowledgement for one purchase order by doing a POST request."""
-
         now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
         date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
 

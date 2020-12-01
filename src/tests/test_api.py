@@ -4,10 +4,10 @@ from src.model.trademax_api import TrademaxAPI
 
 
 class APITest(unittest.TestCase):
-    def create_token(self):
+    def test_create_token(self):
         self.trademax_api = TrademaxAPI()
         self.assertTrue(type(self.trademax_api.TOKEN) is str)
 
+    def test_get_purchase_order(self):
+        pass
 
-if __name__ == '__main__':
-    unittest.main()

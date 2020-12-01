@@ -2,7 +2,6 @@ class Line:
     """
     Represents a Line in a Purchase Order.
     """
-
     item_no = ''
     supplier_item_no = ''
     line_no = 0
