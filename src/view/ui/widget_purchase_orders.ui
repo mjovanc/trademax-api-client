@@ -34,7 +34,7 @@
      <x>870</x>
      <y>120</y>
      <width>441</width>
-     <height>401</height>
+     <height>221</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -65,7 +65,7 @@
          <string notr="true">min-height:1.5em;</string>
         </property>
         <property name="text">
-         <string>Open a Purchase Order with ID</string>
+         <string>Open with ID</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -84,27 +84,7 @@
          <string notr="true">min-height:1.5em;</string>
         </property>
         <property name="text">
-         <string>Acknowledge Purchase Order</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_dispatch">
-        <property name="styleSheet">
-         <string notr="true">min-height:1.5em;</string>
-        </property>
-        <property name="text">
-         <string>Dispatch</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_invoice">
-        <property name="styleSheet">
-         <string notr="true">min-height:1.5em;</string>
-        </property>
-        <property name="text">
-         <string>Create Invoice</string>
+         <string>Acknowledge</string>
         </property>
        </widget>
       </item>

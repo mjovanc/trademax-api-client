@@ -64,20 +64,18 @@ class TrademaxAPI:
         # TODO: Can't switch to another page.
         url = self.API_URL + '/purchase-order-requests'
         headers = {'Authorization': self.TOKEN}
-        params = {'pagination': {'current_page': page_no}}
         data = {
             'created_date_from': created_date_from,
             'created_date_to': created_date_to,
             'latest': latest,
             'per_page': per_page,
-            'sales_order_tenant': sales_order_tenant
+            'sales_order_tenant': sales_order_tenant,
+            'page': page_no
         }
-        r = requests.get(url, json=data, params=params, headers=headers).json()
+        r = requests.get(url, json=data, headers=headers).json()
 
         num_pages = r['pagination']['last_page']
         purchase_orders = []
-
-        print(r['pagination'])
 
         for d in r['data']:
             if d is not None:

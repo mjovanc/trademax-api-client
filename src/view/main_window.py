@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
             self.btn_purchase_orders.setEnabled(False)
 
         # Widgets
-        self.widget_purchase_orders = PurchaseOrdersWidget(self)
+        self.widget_purchase_orders = PurchaseOrdersWidget(self, self.trademax_api)
         self.widget_about = AboutWidget(self)
 
         # Stacked widgets
