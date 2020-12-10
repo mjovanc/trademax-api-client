@@ -3,6 +3,8 @@ from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
+from view.popup import Popup
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 parser = ConfigParser()
@@ -20,6 +22,10 @@ class InvoiceWidget(QWidget):
         self.trademax_api = trademax_api
         # self.po_obj = trademax_a
 
+        # Event listeners
+        self.btn_create_invoice.clicked.connect(self.create_invoice)
+        self.btn_close.clicked.connect(lambda: parent.close())
+
         self.set_form_data()
 
     def set_form_data(self):
@@ -35,6 +41,12 @@ class InvoiceWidget(QWidget):
         # Adding table rows
         #for line in self.po_obj['lines']:
         #    self.add_table_row(self.tablewidget_lines, dict(line))
+
+    def create_invoice(self):
+        popup = Popup(self.tr('Invoice created!'),
+                      self.tr('An invoice has been created to Trademax.'))
+        popup.show()
+        self.btn_create_invoice.setEnabled(False)
 
     def add_table_row(self, table, row_data):
         """Adding table rows."""

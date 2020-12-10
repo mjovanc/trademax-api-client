@@ -102,9 +102,9 @@ class TrademaxAPI:
 
     def post_purchase_order_response(
             self, request_id, status, reason, external_reference, gross_amount, tax_amount,
-            total_amount, confirmed_delivery_from, confirmed_delivery_to, lines
+            total_amount, confirmed_delivery_from, confirmed_delivery_to, lines=None
     ):
-        """Use to send a response to the Trademax API if accepted, rejected or corrected."""
+        """Sends a response to Trademax API if accepted, rejected or corrected."""
 
         url = self.API_URL + '/purchase-order-responses'
         data = {

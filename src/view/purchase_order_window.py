@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
+from utils.status import Status
 from view.dispatch_widget import DispatchWidget
 from view.invoice_widget import InvoiceWidget
 
@@ -97,11 +98,27 @@ class PurchaseOrderWindow(QWidget):
 
     def accept_order_corrections(self):
         # send order response
-        # self.go_to_dispatch()
-        pass
+        print(self.po_obj)
+        self.go_to_dispatch()
 
     def accept_order(self):
-        # send order response here
+        """Accepting a Purchase Order."""
+
+        # Setting delivery dates if set to None
+        for line in self.po_obj['lines']:
+            if line['confirmed_delivery_from'] is None:
+                line['confirmed_delivery_from'] = self.po_obj['requested_delivery_from']
+            if line['confirmed_delivery_to'] is None:
+                line['confirmed_delivery_to'] = self.po_obj['requested_delivery_to']
+
+        # Sends the response to API
+        self.trademax_api.post_purchase_order_response(
+            self.po_obj['id'], Status.ACCEPTED.value, 'Accepted.',
+            parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
+            self.po_obj['tax_amount'], self.po_obj['total_amount'],
+            self.po_obj['requested_delivery_from'], self.po_obj['requested_delivery_to'])
+
+        # Opens up dispatch widget
         self.go_to_dispatch()
 
     def add_table_row(self, table, row_data):
