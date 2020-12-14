@@ -32,6 +32,8 @@ class InvoiceWidget(QWidget):
         """Sets the data in the fields in the QWidget."""
         self.lineedit_po_id.setText(self.po_id)
 
+        # TODO: Set invoice date here automatically based on system time (due date, manually)
+
         # Lines Tab
         self.tablewidget_lines.setColumnCount(5)
         self.tablewidget_lines.setHorizontalHeaderLabels(

@@ -59,18 +59,12 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineedit_po_dispatch_date"/>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_8">
            <property name="text">
             <string>Delivery Date:</string>
            </property>
           </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="lineedit_po_delivery_date"/>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_7">
@@ -81,6 +75,12 @@
          </item>
          <item row="3" column="1">
           <widget class="QLineEdit" name="lineedit_po_external_reference"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDateTimeEdit" name="datetimeedit_dispatch_date"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDateTimeEdit" name="datetimeedit_delivery_date"/>
          </item>
         </layout>
        </widget>
@@ -101,18 +101,12 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineedit_po_shipping_agent"/>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
             <string>Shipping Agent Service:</string>
            </property>
           </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineedit_po_shipping_agent_service"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_5">
@@ -133,6 +127,12 @@
          </item>
          <item row="3" column="1">
           <widget class="QLineEdit" name="lineedit_po_carrier_reference"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="combobox_shipping_agent"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="lineedit_shipping_agent_service"/>
          </item>
         </layout>
        </widget>

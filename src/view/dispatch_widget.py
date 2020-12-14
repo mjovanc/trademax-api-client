@@ -3,10 +3,12 @@ from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
+from utils.shipping_agent import ShippingAgent
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 parser = ConfigParser()
-parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
+parser.read(os.path.join(BASE_DIR, 'settings.ini'), )
 
 
 class DispatchWidget(QWidget):
@@ -24,12 +26,18 @@ class DispatchWidget(QWidget):
         self.btn_dispatch.clicked.connect(self.dispatch_order)
         self.btn_close.clicked.connect(lambda: parent.close())
 
+        # TODO: Grab correct format of date, time and timezone and send it to response
+        # 2020-10-07T14:10:26+02:00 # correct format we need to grab and send
+        # print(self.datetimeedit_delivery_date.dateTime().toString('yyyy-MM-ddTh:mm:ss+zzz'))
+
         self.set_form_data()
 
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
         self.lineedit_po_id.setText(self.po_id)
-        pass
+
+        for data in ShippingAgent:
+            self.combobox_shipping_agent.addItem(data.value)
 
     def dispatch_order(self):
         # Dispatch the order with api
@@ -42,12 +50,13 @@ class DispatchWidget(QWidget):
             'email': self.lineedit_po_da_email, 'country_code': self.lineedit_po_da_countrycode,
         }
 
-        self.trademax_api.post_purchase_order_dispatch(
-            self.po_obj['id'], self.lineedit_po_dispatch_date.text(),
-            self.lineedit_po_delivery_date.text(), self.po_obj['lines'],
-            self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
-            self.lineedit_po_shipping_agent.text(), self.lineedit_po_shipping_agent_service.text(),
-            self.lineedit_po_tracking_code.text(), dispatch_address)
+        # TODO: Send the dates here (need to be updated)
+        # self.trademax_api.post_purchase_order_dispatch(
+        #     self.po_obj['id'], self.lineedit_po_dispatch_date.text(),
+        #     self.lineedit_po_delivery_date.text(), self.po_obj['lines'],
+        #     self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
+        #     self.lineedit_po_shipping_agent.text(), self.lineedit_po_shipping_agent_service.text(),
+        #     self.lineedit_po_tracking_code.text(), dispatch_address)
         self.parent.go_to_invoice()
 
     def add_table_row(self, table, row_data):

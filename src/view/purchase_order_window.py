@@ -2,10 +2,13 @@ import os
 from configparser import ConfigParser
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+from requests import HTTPError
 
+from utils.logging import add_logging_critical
 from utils.status import Status
 from view.dispatch_widget import DispatchWidget
 from view.invoice_widget import InvoiceWidget
+from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -93,17 +96,33 @@ class PurchaseOrderWindow(QWidget):
             self.add_table_row(self.tablewidget_lines, dict(line))
 
     def reject_order(self):
-        # send order response
-        pass
+        """Rejects a Purchase Order."""
+        try:
+            # Send a rejected response to Trademax API of the Purchase Order
+            self.trademax_api.post_purchase_order_response(
+                self.po_obj['id'], Status.REJECTED.value, 'Rejected.',
+                parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
+                self.po_obj['tax_amount'], self.po_obj['total_amount'],
+                self.po_obj['requested_delivery_from'], self.po_obj['requested_delivery_to'],
+                self.po_obj['lines'])
+
+            popup = Popup(self.tr('Purchase Order Rejected'),
+                          self.tr('The purchase order is now rejected.'))
+            popup.show()
+        except HTTPError:
+            popup = Popup(self.tr('Could not send response to Trademax'),
+                          self.tr('The purchase order could not be updated. '
+                                  'Contact Trademax or the Developer of the application.'))
+            popup.show()
+            add_logging_critical()
 
     def accept_order_corrections(self):
-        # send order response
-        print(self.po_obj)
+        """Accepts a Purchase Order with corrected information."""
         self.go_to_dispatch()
 
     def accept_order(self):
         """Accepting a Purchase Order."""
-
+        # TODO: Not sure if it works
         # Setting delivery dates if set to None
         for line in self.po_obj['lines']:
             if line['confirmed_delivery_from'] is None:

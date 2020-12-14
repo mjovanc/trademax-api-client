@@ -23,8 +23,6 @@ class PurchaseOrdersWidget(QWidget):
 
         # Windows
         self.window_purchase_order = None
-        self.dispatch_window = None
-        self.invoice_window = None
 
         # Adding list widgets from API
         try:
