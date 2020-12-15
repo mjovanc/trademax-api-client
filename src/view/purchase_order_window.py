@@ -1,5 +1,8 @@
+import datetime
 import os
 from configparser import ConfigParser
+
+import pytz
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from requests import HTTPError
@@ -26,6 +29,10 @@ class PurchaseOrderWindow(QWidget):
         self.trademax_api = trademax_api
         self.po_id = po_id
         self.po_obj = self.trademax_api.get_purchase_order(self.po_id)[0]
+        self.dt_created_at = ''
+        self.dt_acknowledge_at = ''
+        self.dt_requested_delivery_from = ''
+        self.dt_requested_delivery_to = ''
 
         # Set the order ID in label
         self.order_id = self.label_order_id.text()
@@ -49,11 +56,8 @@ class PurchaseOrderWindow(QWidget):
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
         # General tab
+        # TODO: Have to validate that the user changed the dates instead of initial value
         self.lineedit_po_id.setText(self.po_obj['purchase_order_id'])
-        self.lineedit_po_created_at.setText(self.po_obj['created_at'])
-        self.lineedit_po_acknowledged_at.setText(self.po_obj['acknowledged_at'])
-        self.lineedit_po_requested_delivery_from.setText(self.po_obj['requested_delivery_from'])
-        self.lineedit_po_requested_delivery_to.setText(self.po_obj['requested_delivery_to'])
         self.lineedit_po_currency.setText(self.po_obj['currency'])
         self.doublespinbox_po_gross_amount.setValue(self.po_obj['gross_amount'])
         self.doublespinbox_po_tax_amount.setValue(self.po_obj['tax_amount'])
@@ -118,27 +122,83 @@ class PurchaseOrderWindow(QWidget):
 
     def accept_order_corrections(self):
         """Accepts a Purchase Order with corrected information."""
+        self.format_datetime()
+
+        # Setting the set datetime to all lines to be the same
+        # This could be a feature later on to be able to edit line specific datetime
+        for line in self.po_obj['lines']:
+            if line['confirmed_delivery_from'] is None:
+                line['confirmed_delivery_from'] = self.dt_requested_delivery_from
+            if line['confirmed_delivery_to'] is None:
+                line['confirmed_delivery_to'] = self.dt_requested_delivery_to
+
+        try:
+            # Send a rejected response to Trademax API of the Purchase Order
+            self.trademax_api.post_purchase_order_response(
+                self.po_obj['id'], Status.CORRECTED.value, 'Corrected.',
+                parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
+                self.po_obj['tax_amount'], self.po_obj['total_amount'],
+                self.dt_requested_delivery_from, self.dt_requested_delivery_to,
+                self.po_obj['lines'])
+
+            popup = Popup(self.tr('Purchase Order Accepted'),
+                          self.tr('The purchase order is now accepted with some corrections.'))
+            popup.show()
+        except HTTPError:
+            popup = Popup(self.tr('Could not send response to Trademax'),
+                          self.tr('The purchase order could not be updated. '
+                                  'Contact Trademax or the Developer of the application.'))
+            popup.show()
+            add_logging_critical()
+
+        # Opens up dispatch widget
         self.go_to_dispatch()
 
     def accept_order(self):
         """Accepting a Purchase Order."""
-        # TODO: Not sure if it works
-        # Setting delivery dates if set to None
+        self.format_datetime()
+
+        # Setting datetime on all lines of a purchase order
         for line in self.po_obj['lines']:
             if line['confirmed_delivery_from'] is None:
-                line['confirmed_delivery_from'] = self.po_obj['requested_delivery_from']
+                line['confirmed_delivery_from'] = self.dt_requested_delivery_from
             if line['confirmed_delivery_to'] is None:
-                line['confirmed_delivery_to'] = self.po_obj['requested_delivery_to']
+                line['confirmed_delivery_to'] = self.dt_requested_delivery_to
 
-        # Sends the response to API
-        self.trademax_api.post_purchase_order_response(
-            self.po_obj['id'], Status.ACCEPTED.value, 'Accepted.',
-            parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
-            self.po_obj['tax_amount'], self.po_obj['total_amount'],
-            self.po_obj['requested_delivery_from'], self.po_obj['requested_delivery_to'])
+        try:
+            # Sends the response to API
+            self.trademax_api.post_purchase_order_response(
+                self.po_obj['id'], Status.ACCEPTED.value, 'Accepted.',
+                parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
+                self.po_obj['tax_amount'], self.po_obj['total_amount'],
+                self.dt_requested_delivery_from, self.dt_requested_delivery_to)
+
+            popup = Popup(self.tr('Purchase Order Accepted'),
+                          self.tr('The purchase order is now accepted with no corrections.'))
+            popup.show()
+        except HTTPError:
+            popup = Popup(self.tr('Could not send response to Trademax'),
+                          self.tr('The purchase order could not be updated. '
+                                  'Contact Trademax or the Developer of the application.'))
+            popup.show()
+            add_logging_critical()
 
         # Opens up dispatch widget
         self.go_to_dispatch()
+
+    def format_datetime(self):
+        dt_format = 'yyyy-MM-ddThh:mm:ss'
+        dt_created_at = self.datetimeedit_created_at.dateTime().toString(dt_format)
+        dt_acknowledge_at = self.datetimeedit_acknowledge_at.dateTime().toString(dt_format)
+        dt_requested_delivery_from = self.datetimeedit_requested_delivery_from.dateTime().toString(dt_format)
+        dt_requested_delivery_to = self.datetimeedit_requested_delivery_to.dateTime().toString(dt_format)
+
+        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
+        utc = now.strftime("%z")
+        self.dt_created_at = dt_created_at + utc
+        self.dt_acknowledge_at = dt_acknowledge_at + utc
+        self.dt_requested_delivery_from = dt_requested_delivery_from + utc
+        self.dt_requested_delivery_to = dt_requested_delivery_to + utc
 
     def add_table_row(self, table, row_data):
         """Adding table rows."""
