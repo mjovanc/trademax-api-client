@@ -20,7 +20,7 @@ class InvoiceWidget(QWidget):
         uic.loadUi('view/ui/widget_invoice.ui', self)
         self.po_id = po_id
         self.trademax_api = trademax_api
-        # self.po_obj = trademax_a
+        self.po_obj = trademax_api.get_purchase_order(self.po_id)[0]
 
         # Event listeners
         self.btn_create_invoice.clicked.connect(self.create_invoice)
@@ -41,8 +41,9 @@ class InvoiceWidget(QWidget):
              self.tr('Quantity'), self.tr('Gross Price'), self.tr('Gross Amount')])
 
         # Adding table rows
-        #for line in self.po_obj['lines']:
-        #    self.add_table_row(self.tablewidget_lines, dict(line))
+        # TODO: Not working (setting wrong values in rows
+        for line in self.po_obj['lines']:
+            self.add_table_row(self.tablewidget_lines, dict(line))
 
     def create_invoice(self):
         popup = Popup(self.tr('Invoice created!'),

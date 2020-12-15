@@ -50,7 +50,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="lineedit_po_id"/>
+          <widget class="QLineEdit" name="lineedit_po_id">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_2">
@@ -77,7 +81,11 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDateTimeEdit" name="datetimeedit_invoice_date"/>
+          <widget class="QDateTimeEdit" name="datetimeedit_invoice_date">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="3" column="1">
           <widget class="QDateTimeEdit" name="datetimeedit_due_date"/>

@@ -58,6 +58,15 @@ class PurchaseOrderWindow(QWidget):
         # General tab
         # TODO: Have to validate that the user changed the dates instead of initial value
         self.lineedit_po_id.setText(self.po_obj['purchase_order_id'])
+
+        # TODO: Add dates into QDateTimeEdit fields from self.po_obj
+        # date_time = self.po_obj['created_at'].split('+', 1)[0]
+        # date_time_obj = QDateTime.fromString(date_time, 'yyyy-MM-ddThh:mm:ss')
+        # self.datetimeedit_created_at.setDateTime()
+        # self.datetimeedit_acknowledge_at.setDateTime()
+        # self.datetimeedit_requested_delivery_from.setDateTime()
+        # self.datetimeedit_requested_delivery_to.setDateTime()
+
         self.lineedit_po_currency.setText(self.po_obj['currency'])
         self.doublespinbox_po_gross_amount.setValue(self.po_obj['gross_amount'])
         self.doublespinbox_po_tax_amount.setValue(self.po_obj['tax_amount'])

@@ -63,7 +63,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -87,7 +87,11 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineedit_po_id"/>
+            <widget class="QLineEdit" name="lineedit_po_id">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_2">
@@ -124,10 +128,18 @@
             <widget class="QDateTimeEdit" name="datetimeedit_requested_delivery_to"/>
            </item>
            <item row="1" column="1">
-            <widget class="QDateTimeEdit" name="datetimeedit_created_at"/>
+            <widget class="QDateTimeEdit" name="datetimeedit_created_at">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QDateTimeEdit" name="datetimeedit_acknowledge_at"/>
+            <widget class="QDateTimeEdit" name="datetimeedit_acknowledge_at">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -177,7 +189,11 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineedit_po_currency"/>
+            <widget class="QLineEdit" name="lineedit_po_currency">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item row="1" column="1">
             <widget class="QDoubleSpinBox" name="doublespinbox_po_gross_amount"/>
@@ -234,13 +250,25 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineedit_po_so_id"/>
+            <widget class="QLineEdit" name="lineedit_po_so_id">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="lineedit_po_so_channel"/>
+            <widget class="QLineEdit" name="lineedit_po_so_channel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLineEdit" name="lineedit_po_so_tentant"/>
+            <widget class="QLineEdit" name="lineedit_po_so_tentant">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -396,6 +424,9 @@
           <string>Lines</string>
          </attribute>
          <widget class="QTableWidget" name="tablewidget_lines">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>20</x>

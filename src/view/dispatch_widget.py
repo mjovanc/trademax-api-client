@@ -21,6 +21,7 @@ class DispatchWidget(QWidget):
         self.parent = parent
         self.po_id = po_id
         self.trademax_api = trademax_api
+        self.po_obj = trademax_api.get_purchase_order(self.po_id)[0]
 
         # Event listeners
         self.btn_dispatch.clicked.connect(self.dispatch_order)
@@ -38,6 +39,20 @@ class DispatchWidget(QWidget):
 
         for data in ShippingAgent:
             self.combobox_shipping_agent.addItem(data.value)
+
+        # Lines Tab
+        self.tablewidget_lines.setColumnCount(15)
+        self.tablewidget_lines.setHorizontalHeaderLabels(
+            [self.tr('Item Number'), self.tr('Supplier Item Number'), self.tr('Line Number'),
+            self.tr('Quantity'), self.tr('Quantity Accepted'), self.tr('Quantity Dispatched'),
+            self.tr('Quantity Received'), self.tr('Units'), self.tr('Gross Price'),
+            self.tr('Tax %'), self.tr('Gross Amount'), self.tr('Tax Amount'), self.tr('Total Amount'),
+            self.tr('Confirmed Delivery From'), self.tr('Confirmed Delivery To')])
+
+        # Adding table rows
+        # TODO: Not working (setting wrong values in rows
+        for line in self.po_obj['lines']:
+            self.add_table_row(self.tablewidget_lines, dict(line))
 
     def dispatch_order(self):
         # Dispatch the order with api
