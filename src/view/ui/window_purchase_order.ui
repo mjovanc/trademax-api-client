@@ -89,7 +89,10 @@
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineedit_po_id">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -130,14 +133,20 @@
            <item row="1" column="1">
             <widget class="QDateTimeEdit" name="datetimeedit_created_at">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
             <widget class="QDateTimeEdit" name="datetimeedit_acknowledge_at">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -191,18 +200,33 @@
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineedit_po_currency">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="doublespinbox_po_gross_amount"/>
+            <widget class="QDoubleSpinBox" name="doublespinbox_po_gross_amount">
+             <property name="maximum">
+              <double>99999.990000000005239</double>
+             </property>
+            </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="doublespinbox_po_tax_amount"/>
+            <widget class="QDoubleSpinBox" name="doublespinbox_po_tax_amount">
+             <property name="maximum">
+              <double>99999.990000000005239</double>
+             </property>
+            </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="doublespinbox_po_total_amount"/>
+            <widget class="QDoubleSpinBox" name="doublespinbox_po_total_amount">
+             <property name="maximum">
+              <double>99999.990000000005239</double>
+             </property>
+            </widget>
            </item>
            <item row="4" column="1">
             <widget class="QCheckBox" name="checkbox_po_partial_delivery">
@@ -252,21 +276,30 @@
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineedit_po_so_id">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="lineedit_po_so_channel">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
             <widget class="QLineEdit" name="lineedit_po_so_tentant">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -411,10 +444,24 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineedit_po_s_supplierid"/>
+            <widget class="QLineEdit" name="lineedit_po_s_supplierid">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="lineedit_po_s_name"/>
+            <widget class="QLineEdit" name="lineedit_po_s_name">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -444,6 +491,15 @@
           <property name="sortingEnabled">
            <bool>true</bool>
           </property>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>100</number>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>150</number>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>25</number>
+          </attribute>
          </widget>
         </widget>
        </widget>

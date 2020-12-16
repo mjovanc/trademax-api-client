@@ -4,6 +4,7 @@ from configparser import ConfigParser
 
 import pytz
 from PyQt5 import uic
+from PyQt5.QtCore import QDateTime
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from requests import HTTPError
 
@@ -29,6 +30,7 @@ class PurchaseOrderWindow(QWidget):
         self.trademax_api = trademax_api
         self.po_id = po_id
         self.po_obj = self.trademax_api.get_purchase_order(self.po_id)[0]
+        self.dt_format = 'yyyy-MM-ddThh:mm:ss'
         self.dt_created_at = ''
         self.dt_acknowledge_at = ''
         self.dt_requested_delivery_from = ''
@@ -55,17 +57,29 @@ class PurchaseOrderWindow(QWidget):
 
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
+
         # General tab
-        # TODO: Have to validate that the user changed the dates instead of initial value
         self.lineedit_po_id.setText(self.po_obj['purchase_order_id'])
 
-        # TODO: Add dates into QDateTimeEdit fields from self.po_obj
-        # date_time = self.po_obj['created_at'].split('+', 1)[0]
-        # date_time_obj = QDateTime.fromString(date_time, 'yyyy-MM-ddThh:mm:ss')
-        # self.datetimeedit_created_at.setDateTime()
-        # self.datetimeedit_acknowledge_at.setDateTime()
-        # self.datetimeedit_requested_delivery_from.setDateTime()
-        # self.datetimeedit_requested_delivery_to.setDateTime()
+        if self.po_obj['created_at'] is not None:
+            date_time = self.po_obj['created_at'].split('+', 1)[0]
+            date_time_obj = QDateTime.fromString(date_time, self.dt_format)
+            self.datetimeedit_created_at.setDateTime(date_time_obj)
+
+        if self.po_obj['acknowledged_at'] is not None:
+            date_time = self.po_obj['acknowledged_at'].split('+', 1)[0]
+            date_time_obj = QDateTime.fromString(date_time, self.dt_format)
+            self.datetimeedit_acknowledge_at.setDateTime(date_time_obj)
+
+        if self.po_obj['requested_delivery_from'] is not None:
+            date_time = self.po_obj['requested_delivery_from'].split('+', 1)[0]
+            date_time_obj = QDateTime.fromString(date_time, self.dt_format)
+            self.datetimeedit_requested_delivery_from.setDateTime(date_time_obj)
+
+        if self.po_obj['requested_delivery_to'] is not None:
+            date_time = self.po_obj['requested_delivery_to'].split('+', 1)[0]
+            date_time_obj = QDateTime.fromString(date_time, self.dt_format)
+            self.datetimeedit_requested_delivery_to.setDateTime(date_time_obj)
 
         self.lineedit_po_currency.setText(self.po_obj['currency'])
         self.doublespinbox_po_gross_amount.setValue(self.po_obj['gross_amount'])
@@ -143,25 +157,26 @@ class PurchaseOrderWindow(QWidget):
 
         try:
             # Send a rejected response to Trademax API of the Purchase Order
+            # Currently lines is not editable - Feature request
             self.trademax_api.post_purchase_order_response(
                 self.po_obj['id'], Status.CORRECTED.value, 'Corrected.',
-                parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
-                self.po_obj['tax_amount'], self.po_obj['total_amount'],
+                parser.get('api', 'API_UNIQUE_REFERENCE'), self.doublespinbox_po_gross_amount.value(),
+                self.doublespinbox_po_tax_amount.value(), self.doublespinbox_po_total_amount.value(),
                 self.dt_requested_delivery_from, self.dt_requested_delivery_to,
                 self.po_obj['lines'])
 
             popup = Popup(self.tr('Purchase Order Accepted'),
                           self.tr('The purchase order is now accepted with some corrections.'))
             popup.show()
+
+            # Opens up dispatch widget
+            self.go_to_dispatch()
         except HTTPError:
             popup = Popup(self.tr('Could not send response to Trademax'),
                           self.tr('The purchase order could not be updated. '
                                   'Contact Trademax or the Developer of the application.'))
             popup.show()
             add_logging_critical()
-
-        # Opens up dispatch widget
-        self.go_to_dispatch()
 
     def accept_order(self):
         """Accepting a Purchase Order."""
@@ -185,6 +200,9 @@ class PurchaseOrderWindow(QWidget):
             popup = Popup(self.tr('Purchase Order Accepted'),
                           self.tr('The purchase order is now accepted with no corrections.'))
             popup.show()
+
+            # Opens up dispatch widget
+            self.go_to_dispatch()
         except HTTPError:
             popup = Popup(self.tr('Could not send response to Trademax'),
                           self.tr('The purchase order could not be updated. '
@@ -192,15 +210,15 @@ class PurchaseOrderWindow(QWidget):
             popup.show()
             add_logging_critical()
 
-        # Opens up dispatch widget
-        self.go_to_dispatch()
-
     def format_datetime(self):
-        dt_format = 'yyyy-MM-ddThh:mm:ss'
-        dt_created_at = self.datetimeedit_created_at.dateTime().toString(dt_format)
-        dt_acknowledge_at = self.datetimeedit_acknowledge_at.dateTime().toString(dt_format)
-        dt_requested_delivery_from = self.datetimeedit_requested_delivery_from.dateTime().toString(dt_format)
-        dt_requested_delivery_to = self.datetimeedit_requested_delivery_to.dateTime().toString(dt_format)
+        """
+        Formats QDateTimeEdit fields to strings.
+        Is used for preparing data to send through API.
+        """
+        dt_created_at = self.datetimeedit_created_at.dateTime().toString(self.dt_format)
+        dt_acknowledge_at = self.datetimeedit_acknowledge_at.dateTime().toString(self.dt_format)
+        dt_requested_delivery_from = self.datetimeedit_requested_delivery_from.dateTime().toString(self.dt_format)
+        dt_requested_delivery_to = self.datetimeedit_requested_delivery_to.dateTime().toString(self.dt_format)
 
         now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
         utc = now.strftime("%z")

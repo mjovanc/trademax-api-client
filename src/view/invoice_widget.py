@@ -31,6 +31,7 @@ class InvoiceWidget(QWidget):
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
         self.lineedit_po_id.setText(self.po_id)
+        self.lineedit_po_external_reference.setText(parser.get('api', 'API_UNIQUE_REFERENCE'))
 
         # TODO: Set invoice date here automatically based on system time (due date, manually)
 

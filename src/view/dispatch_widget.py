@@ -1,5 +1,8 @@
+import datetime
 import os
 from configparser import ConfigParser
+
+import pytz
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 
@@ -22,40 +25,37 @@ class DispatchWidget(QWidget):
         self.po_id = po_id
         self.trademax_api = trademax_api
         self.po_obj = trademax_api.get_purchase_order(self.po_id)[0]
+        self.dt_format = 'yyyy-MM-ddThh:mm:ss'
+        self.dt_dispatch_date = ''
+        self.dt_delivery_date = ''
+        self.dispatch_lines = self.generate_dispatch_lines(self.po_obj['lines'])
 
         # Event listeners
         self.btn_dispatch.clicked.connect(self.dispatch_order)
         self.btn_close.clicked.connect(lambda: parent.close())
-
-        # TODO: Grab correct format of date, time and timezone and send it to response
-        # 2020-10-07T14:10:26+02:00 # correct format we need to grab and send
-        # print(self.datetimeedit_delivery_date.dateTime().toString('yyyy-MM-ddTh:mm:ss+zzz'))
 
         self.set_form_data()
 
     def set_form_data(self):
         """Sets the data in the fields in the QWidget."""
         self.lineedit_po_id.setText(self.po_id)
+        self.lineedit_po_external_reference.setText(parser.get('api', 'API_UNIQUE_REFERENCE'))
 
         for data in ShippingAgent:
             self.combobox_shipping_agent.addItem(data.value)
 
         # Lines Tab
-        self.tablewidget_lines.setColumnCount(15)
+        self.tablewidget_lines.setColumnCount(4)
         self.tablewidget_lines.setHorizontalHeaderLabels(
-            [self.tr('Item Number'), self.tr('Supplier Item Number'), self.tr('Line Number'),
-            self.tr('Quantity'), self.tr('Quantity Accepted'), self.tr('Quantity Dispatched'),
-            self.tr('Quantity Received'), self.tr('Units'), self.tr('Gross Price'),
-            self.tr('Tax %'), self.tr('Gross Amount'), self.tr('Tax Amount'), self.tr('Total Amount'),
-            self.tr('Confirmed Delivery From'), self.tr('Confirmed Delivery To')])
+            [self.tr('Supplier Item Number'), self.tr('Line Number'),
+             self.tr('Quantity'), self.tr('Quantity Outstanding')])
 
         # Adding table rows
-        # TODO: Not working (setting wrong values in rows
-        for line in self.po_obj['lines']:
+        for line in self.dispatch_lines:
             self.add_table_row(self.tablewidget_lines, dict(line))
 
     def dispatch_order(self):
-        # Dispatch the order with api
+        """Dispatch the order."""
 
         # TODO: Need to add validation here
         dispatch_address = {
@@ -65,14 +65,38 @@ class DispatchWidget(QWidget):
             'email': self.lineedit_po_da_email, 'country_code': self.lineedit_po_da_countrycode,
         }
 
-        # TODO: Send the dates here (need to be updated)
-        # self.trademax_api.post_purchase_order_dispatch(
-        #     self.po_obj['id'], self.lineedit_po_dispatch_date.text(),
-        #     self.lineedit_po_delivery_date.text(), self.po_obj['lines'],
-        #     self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
-        #     self.lineedit_po_shipping_agent.text(), self.lineedit_po_shipping_agent_service.text(),
-        #     self.lineedit_po_tracking_code.text(), dispatch_address)
+        self.trademax_api.post_purchase_order_dispatch(
+             self.po_obj['id'], self.dt_dispatch_date,
+             self.dt_delivery_date, self.dispatch_lines,
+             self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
+             self.combobox_shipping_agent.currentText(), self.lineedit_shipping_agent_service.text(),
+             self.lineedit_po_tracking_code.text(), dispatch_address)
+
+        # Open invoice widget
         self.parent.go_to_invoice()
+
+    def format_datetime(self):
+        """
+        Formats QDateTimeEdit fields to strings.
+        Is used for preparing data to send through API.
+        """
+        dt_dispatch_date = self.datetimeedit_dispatch_date.dateTime().toString(self.dt_format)
+        dt_delivery_date = self.datetimeedit_delivery_date.dateTime().toString(self.dt_format)
+
+        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
+        utc = now.strftime("%z")
+        self.dt_dispatch_date = dt_dispatch_date + utc
+        self.dt_delivery_date = dt_delivery_date + utc
+
+    def generate_dispatch_lines(self, lines):
+        """Generates a new lines list."""
+        new_lines = []
+        for line in lines:
+            print(line)
+            new_line = {'supplier_item_no': line['supplier_item_no'], 'line_no': line['line_no'],
+                        'quantity': line['quantity'], 'quantity_outstanding': 0}
+            new_lines.append(new_line)
+        return new_lines
 
     def add_table_row(self, table, row_data):
         """Adding table rows."""
