@@ -55,13 +55,19 @@ class TrademaxAPI:
 
     def get_purchase_orders(self, page_no):
         """Gets all purchase orders by doing a GET request."""
-        created_date_from = '2020-05-06T12:27:06+02:00'  # need to set from date and time (perhaps 1 month (could be set in settings.ini
-        created_date_to = '2020-10-09T12:27:06+02:00'  # need set the current date and time here
+        now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
+        now_datetime = now.strftime("%Y-%m-%dT%H:%M:%S%z")
+        month_back = now - datetime.timedelta(weeks=24)
+        month_back_datetime = month_back.strftime("%Y-%m-%dT%H:%M:%S%z")
+
+        print(now_datetime)
+        print(month_back_datetime)
+        created_date_from = month_back_datetime
+        created_date_to = now_datetime
         latest = 0
         per_page = 25
         sales_order_tenant = ''
 
-        # TODO: Can't switch to another page.
         url = self.API_URL + '/purchase-order-requests'
         headers = {'Authorization': self.TOKEN}
         data = {

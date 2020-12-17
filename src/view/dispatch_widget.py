@@ -4,9 +4,12 @@ from configparser import ConfigParser
 
 import pytz
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QLineEdit
+from requests import HTTPError
 
+from utils.logging import add_logging_critical
 from utils.shipping_agent import ShippingAgent
+from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -57,23 +60,35 @@ class DispatchWidget(QWidget):
     def dispatch_order(self):
         """Dispatch the order."""
 
-        # TODO: Need to add validation here
+        # TODO: Validation of QLineEdit fields later
         dispatch_address = {
-            'name': self.lineedit_po_da_name, 'phone': self.lineedit_po_da_phone,
-            'address': self.lineedit_po_da_address, 'postcode': self.lineedit_po_da_postcode,
-            'city': self.lineedit_po_da_city, 'country': self.lineedit_po_da_country,
-            'email': self.lineedit_po_da_email, 'country_code': self.lineedit_po_da_countrycode,
+            'name': self.lineedit_po_da_name.text(), 'phone': self.lineedit_po_da_phone.text(),
+            'address': self.lineedit_po_da_address.text(), 'postcode': self.lineedit_po_da_postcode.text(),
+            'city': self.lineedit_po_da_city.text(), 'country': self.lineedit_po_da_country.text(),
+            'email': self.lineedit_po_da_email.text(), 'country_code': self.lineedit_po_da_countrycode.text(),
         }
 
-        self.trademax_api.post_purchase_order_dispatch(
-             self.po_obj['id'], self.dt_dispatch_date,
-             self.dt_delivery_date, self.dispatch_lines,
-             self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
-             self.combobox_shipping_agent.currentText(), self.lineedit_shipping_agent_service.text(),
-             self.lineedit_po_tracking_code.text(), dispatch_address)
+        try:
+            # Sending dispatch through API
+            self.trademax_api.post_purchase_order_dispatch(
+                 self.po_obj['id'], self.dt_dispatch_date,
+                 self.dt_delivery_date, self.dispatch_lines,
+                 self.lineedit_po_external_reference.text(), self.lineedit_po_carrier_reference.text(),
+                 self.combobox_shipping_agent.currentText(), self.lineedit_shipping_agent_service.text(),
+                 self.lineedit_po_tracking_code.text(), dispatch_address)
 
-        # Open invoice widget
-        self.parent.go_to_invoice()
+            popup = Popup(self.tr('Purchase Order Dispatched'),
+                          self.tr('The purchase order is now dispatched.'))
+            popup.show()
+
+            # Open invoice widget
+            self.parent.go_to_invoice()
+        except HTTPError:
+            popup = Popup(self.tr('Could not send response to Trademax'),
+                          self.tr('The purchase order could not be updated. '
+                                  'Contact Trademax or the Developer of the application.'))
+            popup.show()
+            add_logging_critical()
 
     def format_datetime(self):
         """
@@ -92,7 +107,6 @@ class DispatchWidget(QWidget):
         """Generates a new lines list."""
         new_lines = []
         for line in lines:
-            print(line)
             new_line = {'supplier_item_no': line['supplier_item_no'], 'line_no': line['line_no'],
                         'quantity': line['quantity'], 'quantity_outstanding': 0}
             new_lines.append(new_line)

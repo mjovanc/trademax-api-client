@@ -61,6 +61,7 @@ class PurchaseOrderWindow(QWidget):
         # General tab
         self.lineedit_po_id.setText(self.po_obj['purchase_order_id'])
 
+        # Adding datetime from the Purchase Order
         if self.po_obj['created_at'] is not None:
             date_time = self.po_obj['created_at'].split('+', 1)[0]
             date_time_obj = QDateTime.fromString(date_time, self.dt_format)
