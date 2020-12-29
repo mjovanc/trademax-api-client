@@ -12,6 +12,3 @@ class AboutWidget(QWidget):
 
         # Event listeners
         self.btn_back.clicked.connect(self.parent().go_to_start)
-
-
-

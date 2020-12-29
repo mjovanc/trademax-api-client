@@ -32,6 +32,12 @@ class MainWindow(QMainWindow):
             self.trademax_api = TrademaxAPI()
             api_status = self.label_api_status.text()
             self.label_api_status.setText(api_status + self.tr('Online'))
+
+            # Widgets
+            self.widget_purchase_orders = PurchaseOrdersWidget(self, self.trademax_api)
+
+            # Stacked widgets
+            self.widget_po = self.stackedwidget.addWidget(self.widget_purchase_orders)
         except (HTTPError, ConnectionError):
             # Sets API status
             api_status = self.label_api_status.text()
@@ -46,11 +52,9 @@ class MainWindow(QMainWindow):
             self.btn_purchase_orders.setEnabled(False)
 
         # Widgets
-        self.widget_purchase_orders = PurchaseOrdersWidget(self, self.trademax_api)
         self.widget_about = AboutWidget(self)
 
         # Stacked widgets
-        self.widget_po = self.stackedwidget.addWidget(self.widget_purchase_orders)
         self.widget_about = self.stackedwidget.addWidget(self.widget_about)
 
         # Event listeners

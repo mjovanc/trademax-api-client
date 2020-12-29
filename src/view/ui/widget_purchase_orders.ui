@@ -34,7 +34,7 @@
      <x>870</x>
      <y>120</y>
      <width>441</width>
-     <height>221</height>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -75,16 +75,6 @@
         </property>
         <property name="flat">
          <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_acknowledge">
-        <property name="styleSheet">
-         <string notr="true">min-height:1.5em;</string>
-        </property>
-        <property name="text">
-         <string>Acknowledge</string>
         </property>
        </widget>
       </item>

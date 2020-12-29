@@ -6,7 +6,6 @@ from model.line import Line
 from model.purchase_order import PurchaseOrder
 from view.dispatch_widget import DispatchWidget
 from view.invoice_widget import InvoiceWidget
-from view.popup import Popup
 from view.purchase_order_window import PurchaseOrderWindow
 from utils.logging import add_logging_critical, add_logging_info
 
@@ -35,17 +34,12 @@ class PurchaseOrdersWidget(QWidget):
             # Event listeners
             self.btn_open.clicked.connect(self.toggle_purchase_order_window)
             self.btn_open_po_id.clicked.connect(self.open_purchase_order_with_id)
-            self.btn_acknowledge.clicked.connect(self.acknowledge_purchase_order)
             self.btn_back.clicked.connect(self.parent().go_to_start)
 
             self.pushbutton_page_back.clicked.connect(self.go_page_back)
             self.pushbutton_page_forward.clicked.connect(self.go_page_forward)
         except HTTPError:
             add_logging_critical()
-
-            # Sets buttons disabled
-            self.btn_open.setEnabled(False)
-            self.btn_acknowledge.setEnabled(False)
 
     def go_page_back(self):
         if self.current_page != self.num_pages:
@@ -134,17 +128,6 @@ class PurchaseOrdersWidget(QWidget):
             else:
                 self.window_invoice.show()
         except (AttributeError, HTTPError):
-            add_logging_critical()
-
-    def acknowledge_purchase_order(self):
-        """Acknowledge a selected Purchase Order."""
-        try:
-            self.purchase_order_id = self.listwidget_purchase_orders.currentItem().text()
-            self.trademax_api.post_purchase_order_acknowledgement(self.purchase_order_id)
-            popup = Popup(self.tr('Purchase Order Acknowledged'),
-                          self.tr('The selected purchase order is now acknowledged.'))
-            popup.show()
-        except AttributeError:
             add_logging_critical()
 
     def get_purchase_order(self, po_id):

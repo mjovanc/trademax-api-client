@@ -26,7 +26,7 @@ def add_logging_error():
 
 
 def add_logging_info():
-    """Logging for error events."""
+    """Logging for info events."""
     now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
     date_and_time = now.strftime("%Y-%m-%dT%H:%M:%S%z")
     logging.info('{0}: {1}'.format(date_and_time, traceback.format_exc()))

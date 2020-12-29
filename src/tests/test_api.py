@@ -2,23 +2,24 @@ import unittest
 
 from requests import HTTPError
 
-from src.model.trademax_api import TrademaxAPI
+from model.trademax_api import TrademaxAPI
 
 
 class APITest(unittest.TestCase):
-    def test_create_token(self):
+    def setUp(self):
         self.trademax_api = TrademaxAPI()
+
+    def test_create_token(self):
         self.assertTrue(type(self.trademax_api.TOKEN) is str)
 
-    def test_get_purchase_order(self):
-        self.trademax_api = TrademaxAPI()
-
+    def test_get_wrong_purchase_order(self):
         # Testing a wrong purchase order id
-        p1 = self.trademax_api.get_purchase_order('IOT-wrong-id')
-        self.assertRaises(p1, HTTPError)
+        po = self.trademax_api.get_purchase_order('IOT-wrong-id')
+        self.assertRaises(po, HTTPError)
 
+    def test_get_correct_purchase_order(self):
         # Testing a correct purchase order id
-        p2 = self.trademax_api.get_purchase_order('IOT1002674')
-        self.assertTrue(type(p2) is dict)
+        po = self.trademax_api.get_purchase_order('IOT1002674')
+        self.assertTrue(type(po) is dict)
 
 

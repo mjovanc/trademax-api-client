@@ -70,6 +70,9 @@ class PurchaseOrder:
     # def total_amount(self, val):
     #     """Validate that the total amount is of correct value."""
     #     if not (self.gross_amount + self.tax_amount) == val:
+    #         print(val)
+    #         print(self.gross_amount)
+    #         print(self.tax_amount)
     #         raise ValueError('Tax Amount is not of a correct value.')
     #     self.total_amount = val
 

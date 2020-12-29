@@ -127,6 +127,7 @@ class PurchaseOrderWindow(QWidget):
         """Rejects a Purchase Order."""
         try:
             # Send a rejected response to Trademax API of the Purchase Order
+            self.trademax_api.post_purchase_order_acknowledgement(self.po_id)
             self.trademax_api.post_purchase_order_response(
                 self.po_obj['id'], Status.REJECTED.value, 'Rejected.',
                 parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],
@@ -159,6 +160,7 @@ class PurchaseOrderWindow(QWidget):
         try:
             # Send a rejected response to Trademax API of the Purchase Order
             # Currently lines is not editable - Feature request
+            self.trademax_api.post_purchase_order_acknowledgement(self.po_id)
             self.trademax_api.post_purchase_order_response(
                 self.po_obj['id'], Status.CORRECTED.value, 'Corrected.',
                 parser.get('api', 'API_UNIQUE_REFERENCE'), self.doublespinbox_po_gross_amount.value(),
@@ -192,6 +194,7 @@ class PurchaseOrderWindow(QWidget):
 
         try:
             # Sends the response to API
+            self.trademax_api.post_purchase_order_acknowledgement(self.po_id)
             self.trademax_api.post_purchase_order_response(
                 self.po_obj['id'], Status.ACCEPTED.value, 'Accepted.',
                 parser.get('api', 'API_UNIQUE_REFERENCE'), self.po_obj['gross_amount'],

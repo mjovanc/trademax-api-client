@@ -57,14 +57,12 @@ class TrademaxAPI:
         """Gets all purchase orders by doing a GET request."""
         now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
         now_datetime = now.strftime("%Y-%m-%dT%H:%M:%S%z")
-        month_back = now - datetime.timedelta(weeks=24)
-        month_back_datetime = month_back.strftime("%Y-%m-%dT%H:%M:%S%z")
+        months_back = now - datetime.timedelta(weeks=24)
+        months_back_datetime = months_back.strftime("%Y-%m-%dT%H:%M:%S%z")
 
-        print(now_datetime)
-        print(month_back_datetime)
-        created_date_from = month_back_datetime
+        created_date_from = months_back_datetime
         created_date_to = now_datetime
-        latest = 0
+        latest = 1
         per_page = 25
         sales_order_tenant = ''
 
@@ -101,7 +99,6 @@ class TrademaxAPI:
         r = requests.post(url, json=data, headers=headers)
 
         if r.status_code == 201:
-            print(r)
             return r
         else:
             return r.raise_for_status()
@@ -126,7 +123,6 @@ class TrademaxAPI:
         if r.status_code == 201:
             return r
         else:
-            print(r.text)
             return r.raise_for_status()
 
     def post_purchase_order_dispatch(
