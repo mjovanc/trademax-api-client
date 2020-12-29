@@ -1,3 +1,5 @@
+import os
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QListWidgetItem, QInputDialog, QLineEdit
 from requests import HTTPError
@@ -9,6 +11,9 @@ from view.invoice_widget import InvoiceWidget
 from view.purchase_order_window import PurchaseOrderWindow
 from utils.logging import add_logging_critical, add_logging_info
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_purchase_orders.ui')
+
 
 class PurchaseOrdersWidget(QWidget):
     """
@@ -16,7 +21,7 @@ class PurchaseOrdersWidget(QWidget):
     """
     def __init__(self, parent, trademax_api):
         super().__init__(parent)
-        uic.loadUi('view/ui/widget_purchase_orders.ui', self)
+        uic.loadUi(UI_FILE, self)
         self.current_page = 1
         self.trademax_api = trademax_api
 

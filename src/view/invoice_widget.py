@@ -12,6 +12,7 @@ from utils.logging import add_logging_error
 from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_invoice.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
@@ -23,7 +24,7 @@ class InvoiceWidget(QWidget):
     """
     def __init__(self, parent, po_id, trademax_api):
         super().__init__(parent)
-        uic.loadUi('view/ui/widget_invoice.ui', self)
+        uic.loadUi(UI_FILE, self)
         self.po_id = po_id
         self.trademax_api = trademax_api
         self.po_obj = trademax_api.get_purchase_order(self.po_id)[0]

@@ -1,5 +1,10 @@
+import os
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_about.ui')
 
 
 class AboutWidget(QWidget):
@@ -8,7 +13,7 @@ class AboutWidget(QWidget):
     """
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('view/ui/widget_about.ui', self)
+        uic.loadUi(UI_FILE, self)
 
         # Event listeners
         self.btn_back.clicked.connect(self.parent().go_to_start)

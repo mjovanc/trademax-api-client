@@ -15,6 +15,7 @@ from view.invoice_widget import InvoiceWidget
 from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/window_purchase_order.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
@@ -26,7 +27,7 @@ class PurchaseOrderWindow(QWidget):
     """
     def __init__(self, trademax_api, po_id):
         super().__init__()
-        uic.loadUi('view/ui/window_purchase_order.ui', self)
+        uic.loadUi(UI_FILE, self)
         self.trademax_api = trademax_api
         self.po_id = po_id
         self.po_obj = self.trademax_api.get_purchase_order(self.po_id)[0]

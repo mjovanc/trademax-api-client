@@ -4,7 +4,7 @@ from configparser import ConfigParser
 
 import pytz
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QLineEdit
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from requests import HTTPError
 
 from utils.logging import add_logging_critical
@@ -12,6 +12,7 @@ from utils.shipping_agent import ShippingAgent
 from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_dispatch.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'), )
@@ -23,7 +24,7 @@ class DispatchWidget(QWidget):
     """
     def __init__(self, parent, po_id, trademax_api):
         super().__init__(parent)
-        uic.loadUi('view/ui/widget_dispatch.ui', self)
+        uic.loadUi(UI_FILE, self)
         self.parent = parent
         self.po_id = po_id
         self.trademax_api = trademax_api

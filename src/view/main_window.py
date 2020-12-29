@@ -14,6 +14,7 @@ from view.about_widget import AboutWidget
 from view.purchase_orders_widget import PurchaseOrdersWidget
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/window_main.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
@@ -25,7 +26,7 @@ class MainWindow(QMainWindow):
     """
     def __init__(self):
         super().__init__()
-        uic.loadUi('view/ui/window_main.ui', self)
+        uic.loadUi(UI_FILE, self)
         self.setWindowTitle(parser.get('default', 'window_title'))
 
         try:
