@@ -1,138 +1,54 @@
-import py2exe
-from distutils.core import setup
-
-# TODO: Not finished, need to fix. Doesn't start the main view in Windows.
-setup(console=['src/main.py'])
-
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pipenv install twine --dev
-
-import io
+#! python3.8.5
+from setuptools import setup
 import os
-import sys
-from shutil import rmtree
+import py2exe
+import matplotlib
 
-from setuptools import find_packages, setup, Command
+VERSION = '1.0.0'
 
-# Package meta-data.
-NAME = 'mypackage'
-DESCRIPTION = 'My short description for my project.'
-URL = 'https://github.com/me/myproject'
-EMAIL = 'me@example.com'
-AUTHOR = 'Awesome Soul'
-REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
+includes = ["sip",
+            "PyQt5",
+            "PyQt5.QtCore",
+            "PyQt5.QtGui",
+            "numpy",
+            "matplotlib.backends.backend_qt5agg",
+            "scipy",
+            "scipy.sparse.csgraph._validation",
+            "scipy.special._ufuncs_cxx",
+            "pandas"]
 
-# What packages are required for this module to be executed?
-REQUIRED = [
-    # 'requests', 'maya', 'records',
-]
+datafiles = [("platforms", ["C:\\Python38\\Lib\\site-packages\\PyQt5\\plugins" +
+                            "\\platforms\\qwindows.dll"]),
+             ("", [r"c:\windows\syswow64\MSVCP100.dll",
+                   r"c:\windows\syswow64\MSVCR100.dll"])] + \
+            matplotlib.get_py2exe_datafiles()
 
-# What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
-
-# The rest you shouldn't have to touch too much :)
-# ------------------------------------------------
-# Except, perhaps the License and Trove Classifiers!
-# If you do change the License, remember to change the Trove Classifier for that!
-
-here = os.path.abspath(os.path.dirname(__file__))
-
-# Import the README and use it as the long-description.
-# Note: this will only work if 'README.md' is present in your MANIFEST.in file!
-try:
-    with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
-        long_description = '\n' + f.read()
-except FileNotFoundError:
-    long_description = DESCRIPTION
-
-# Load the package's __version__.py module as a dictionary.
-about = {}
-if not VERSION:
-    project_slug = NAME.lower().replace("-", "_").replace(" ", "_")
-    with open(os.path.join(here, project_slug, '__version__.py')) as f:
-        exec(f.read(), about)
-else:
-    about['__version__'] = VERSION
-
-
-class UploadCommand(Command):
-    """Support setup.py upload."""
-
-    description = 'Build and publish the package.'
-    user_options = []
-
-    @staticmethod
-    def status(s):
-        """Prints things in bold."""
-        print('\033[1m{0}\033[0m'.format(s))
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        try:
-            self.status('Removing previous builds…')
-            rmtree(os.path.join(here, 'dist'))
-        except OSError:
-            pass
-
-        self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
-
-        self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
-
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
-
-        sys.exit()
-
-
-# Where the magic happens:
 setup(
-    name=NAME,
-    version=about['__version__'],
-    description=DESCRIPTION,
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    author=AUTHOR,
-    author_email=EMAIL,
-    python_requires=REQUIRES_PYTHON,
-    url=URL,
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
-
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
-    install_requires=REQUIRED,
-    extras_require=EXTRAS,
-    include_package_data=True,
+    name='trademax-api-client',
+    version=VERSION,
+    packages=['trademax-api-client'],
+    url='https://github.com/mjovanc/trademax-api-client',
     license='MIT',
-    classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+    windows=[{"script": "main.py"}],
+    scripts=['main.py'],
+    data_files=datafiles,
+    install_requires=[
+        'certifi==2020.6.20',
+        'chardet==3.0.4',
+        'configparser==5.0.1',
+        'idna==2.10',
+        'PyQt5==5.15.1',
+        'PyQt5-sip==12.8.1',
+        'PyQt5-stubs==5.14.2.2',
+        'pytz==2020.4',
+        'qtgui==0.0.1',
+        'qtwidgets==0.16',
+        'requests==2.24.0',
+        'urllib3==1.25.10'
     ],
-    # $ setup.py publish support.
-    cmdclass={
-        'upload': UploadCommand,
-    },
+    options={
+        'py2exe': {
+            'includes': includes,
+        }
+    }
 )
