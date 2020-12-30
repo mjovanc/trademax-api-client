@@ -22,7 +22,7 @@
      <x>20</x>
      <y>130</y>
      <width>821</width>
-     <height>241</height>
+     <height>211</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -52,7 +52,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>390</y>
+     <y>360</y>
      <width>331</width>
      <height>80</height>
     </rect>

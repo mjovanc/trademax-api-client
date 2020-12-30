@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>700</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QStackedWidget" name="stackedwidget">
     <property name="geometry">
      <rect>
-      <x>19</x>
-      <y>179</y>
+      <x>20</x>
+      <y>110</y>
       <width>851</width>
-      <height>451</height>
+      <height>421</height>
      </rect>
     </property>
     <widget class="QWidget" name="start">
@@ -91,8 +91,8 @@
      <rect>
       <x>40</x>
       <y>20</y>
-      <width>811</width>
-      <height>141</height>
+      <width>541</width>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
