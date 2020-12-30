@@ -4,7 +4,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_about.ui')
+UI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
+UI_FILE = os.path.join(UI_DIR, 'widget_about.ui')
 
 
 class AboutWidget(QWidget):

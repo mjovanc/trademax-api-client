@@ -12,7 +12,8 @@ from view.purchase_order_window import PurchaseOrderWindow
 from utils.logging import add_logging_critical, add_logging_info
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/widget_purchase_orders.ui')
+UI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
+UI_FILE = os.path.join(UI_DIR, 'widget_purchase_orders.ui')
 
 
 class PurchaseOrdersWidget(QWidget):

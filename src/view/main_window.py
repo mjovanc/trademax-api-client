@@ -14,7 +14,8 @@ from view.about_widget import AboutWidget
 from view.purchase_orders_widget import PurchaseOrdersWidget
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UI_FILE = os.path.join(BASE_DIR, 'src/view/ui/window_main.ui')
+UI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
+UI_FILE = os.path.join(UI_DIR, 'window_main.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
