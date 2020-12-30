@@ -12,8 +12,7 @@ from utils.shipping_agent import ShippingAgent
 from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
-UI_FILE = os.path.join(UI_DIR, 'widget_dispatch.ui')
+UI_FILE = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui'), 'widget_dispatch.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'), )

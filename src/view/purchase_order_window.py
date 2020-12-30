@@ -15,8 +15,7 @@ from view.invoice_widget import InvoiceWidget
 from view.popup import Popup
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
-UI_FILE = os.path.join(UI_DIR, 'window_purchase_order.ui')
+UI_FILE = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui'), 'window_purchase_order.ui')
 
 parser = ConfigParser()
 parser.read(os.path.join(BASE_DIR, 'settings.ini'),)

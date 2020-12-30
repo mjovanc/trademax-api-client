@@ -5,6 +5,9 @@ from PyQt5 import QtWidgets, QtCore
 
 from view.main_window import MainWindow
 
+BASE_DIR = os.path.abspath('..')
+LOCALES_FILE = os.path.join(os.path.join(BASE_DIR, 'locales'), 'tr_sv')
+
 
 def main():
     """Starting point of application."""
@@ -12,7 +15,7 @@ def main():
 
     # Internationalization
     translator = QtCore.QTranslator(app)
-    translator.load('../resources/locales/tr_sv', os.path.dirname(__file__))
+    translator.load(LOCALES_FILE, os.path.dirname(__file__))
     app.installTranslator(translator)
 
     # Initializing the MainWindow
