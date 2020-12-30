@@ -26,8 +26,6 @@ class TrademaxAPI:
         self.API_PASSWORD = parser.get('api', 'API_PASSWORD')
         self.API_URL = parser.get('api', 'API_URL')
         self.TOKEN = self.post_token_creation()
-        # remove later
-        print(self.TOKEN)
 
     def post_token_creation(self):
         """Returns a Bearer authentication token from the Trademax API."""
