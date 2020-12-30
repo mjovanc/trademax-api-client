@@ -20,6 +20,7 @@ class APITest(unittest.TestCase):
     def test_get_correct_purchase_order(self):
         # Testing a correct purchase order id
         po = self.trademax_api.get_purchase_order('IOT1002674')
-        self.assertTrue(type(po) is dict)
+        print(po)
+        self.assertTrue(type(po) is list)
 
 

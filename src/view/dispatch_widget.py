@@ -34,6 +34,11 @@ class DispatchWidget(QWidget):
         self.dt_delivery_date = ''
         self.dispatch_lines = self.generate_dispatch_lines(self.po_obj['lines'])
 
+        # Setting Window Title
+        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'),
+                                          self.tr('Dispatch Order'))
+        self.setWindowTitle(window_title)
+
         # Event listeners
         self.btn_dispatch.clicked.connect(self.dispatch_order)
         self.btn_close.clicked.connect(lambda: parent.close())

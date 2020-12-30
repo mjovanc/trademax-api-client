@@ -33,6 +33,11 @@ class InvoiceWidget(QWidget):
         self.dt_invoice_date = ''
         self.dt_due_date = ''
 
+        # Setting Window Title
+        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'),
+                                          self.tr('Create Invoice'))
+        self.setWindowTitle(window_title)
+
         # Event listeners
         self.btn_create_invoice.clicked.connect(self.create_invoice)
         self.btn_close.clicked.connect(lambda: parent.close())

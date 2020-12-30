@@ -1,3 +1,11 @@
+# Trademax API Client
+#
+# Author: Marcus Cvjeticanin
+# Location: Växjö, Sweden
+# Website: https://github.com/mjovanc
+# Project URL: https://github.com/mjovanc/trademax-api-client
+# Release: 1.0.0
+
 import os
 import sys
 

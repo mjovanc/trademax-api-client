@@ -36,6 +36,11 @@ class PurchaseOrderWindow(QWidget):
         self.dt_requested_delivery_from = ''
         self.dt_requested_delivery_to = ''
 
+        # Setting Window Title
+        window_title = '{0} - {1}'.format(parser.get('default', 'WINDOW_TITLE'),
+                                          self.tr('Purchase Order'))
+        self.setWindowTitle(window_title)
+
         # Set the order ID in label
         self.order_id = self.label_order_id.text()
         self.label_order_id.setText(self.order_id + self.po_id)
@@ -197,7 +202,7 @@ class PurchaseOrderWindow(QWidget):
                 self.dt_requested_delivery_from, self.dt_requested_delivery_to)
 
             popup = Popup(self.tr('Purchase Order Accepted'),
-                          self.tr('The purchase order is now accepted with no corrections.'))
+                          self.tr('The purchase order is now accepted.'))
             popup.show()
 
             # Opens up dispatch widget
