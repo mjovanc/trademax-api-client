@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>902</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@
      <x>20</x>
      <y>120</y>
      <width>1551</width>
-     <height>761</height>
+     <height>431</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -59,11 +59,11 @@
           <x>0</x>
           <y>0</y>
           <width>1549</width>
-          <height>661</height>
+          <height>321</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -75,7 +75,7 @@
             <x>20</x>
             <y>20</y>
             <width>721</width>
-            <height>591</height>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout">
@@ -141,7 +141,7 @@
             <x>770</x>
             <y>20</y>
             <width>751</width>
-            <height>591</height>
+            <height>141</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_2">
@@ -501,8 +501,8 @@
        <widget class="QWidget" name="horizontalLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>670</x>
-          <y>690</y>
+          <x>660</x>
+          <y>340</y>
           <width>881</width>
           <height>71</height>
          </rect>
