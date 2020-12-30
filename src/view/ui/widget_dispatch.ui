@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1571</width>
-    <height>902</height>
+    <width>900</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1551</width>
-     <height>661</height>
+     <width>861</width>
+     <height>341</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -37,8 +37,8 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>721</width>
-          <height>571</height>
+          <width>411</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -105,10 +105,10 @@
        <widget class="QWidget" name="formLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>770</x>
+          <x>450</x>
           <y>20</y>
-          <width>751</width>
-          <height>571</height>
+          <width>381</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="general_form">
@@ -164,8 +164,8 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>661</width>
-          <height>671</height>
+          <width>411</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_4">
@@ -214,10 +214,10 @@
        <widget class="QWidget" name="formLayoutWidget_5">
         <property name="geometry">
          <rect>
-          <x>710</x>
+          <x>450</x>
           <y>20</y>
-          <width>811</width>
-          <height>671</height>
+          <width>381</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_5">
@@ -273,8 +273,8 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>1501</width>
-          <height>561</height>
+          <width>811</width>
+          <height>261</height>
          </rect>
         </property>
         <property name="showGrid">
@@ -304,10 +304,10 @@
   <widget class="QWidget" name="horizontalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>680</y>
-     <width>861</width>
-     <height>80</height>
+     <x>460</x>
+     <y>360</y>
+     <width>401</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">

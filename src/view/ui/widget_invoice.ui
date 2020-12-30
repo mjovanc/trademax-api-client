@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1600</width>
-    <height>902</height>
+    <width>900</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1551</width>
-     <height>661</height>
+     <width>861</width>
+     <height>341</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -37,8 +37,8 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>721</width>
-          <height>591</height>
+          <width>371</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -108,10 +108,10 @@
        <widget class="QWidget" name="formLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>770</x>
+          <x>410</x>
           <y>20</y>
-          <width>751</width>
-          <height>591</height>
+          <width>321</width>
+          <height>101</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_2">
@@ -187,8 +187,8 @@
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>1501</width>
-          <height>561</height>
+          <width>811</width>
+          <height>261</height>
          </rect>
         </property>
         <property name="showGrid">
@@ -218,10 +218,10 @@
   <widget class="QWidget" name="horizontalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>680</y>
-     <width>881</width>
-     <height>80</height>
+     <x>460</x>
+     <y>360</y>
+     <width>401</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">

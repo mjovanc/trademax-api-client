@@ -25,15 +25,14 @@ class PurchaseOrderWindow(QWidget):
     """
     Displays a Purchase Order Window.
     """
-    def __init__(self, trademax_api, po_id):
+    def __init__(self, trademax_api, po_obj):
         super().__init__()
         uic.loadUi(UI_FILE, self)
         self.trademax_api = trademax_api
-        self.po_id = po_id
+        self.po_id = po_obj.id
         self.po_obj = self.trademax_api.get_purchase_order(self.po_id)[0]
         self.dt_format = 'yyyy-MM-ddThh:mm:ss'
         self.dt_created_at = ''
-        self.dt_acknowledge_at = ''
         self.dt_requested_delivery_from = ''
         self.dt_requested_delivery_to = ''
 
@@ -67,11 +66,6 @@ class PurchaseOrderWindow(QWidget):
             date_time = self.po_obj['created_at'].split('+', 1)[0]
             date_time_obj = QDateTime.fromString(date_time, self.dt_format)
             self.datetimeedit_created_at.setDateTime(date_time_obj)
-
-        if self.po_obj['acknowledged_at'] is not None:
-            date_time = self.po_obj['acknowledged_at'].split('+', 1)[0]
-            date_time_obj = QDateTime.fromString(date_time, self.dt_format)
-            self.datetimeedit_acknowledge_at.setDateTime(date_time_obj)
 
         if self.po_obj['requested_delivery_from'] is not None:
             date_time = self.po_obj['requested_delivery_from'].split('+', 1)[0]
@@ -221,14 +215,12 @@ class PurchaseOrderWindow(QWidget):
         Is used for preparing data to send through API.
         """
         dt_created_at = self.datetimeedit_created_at.dateTime().toString(self.dt_format)
-        dt_acknowledge_at = self.datetimeedit_acknowledge_at.dateTime().toString(self.dt_format)
         dt_requested_delivery_from = self.datetimeedit_requested_delivery_from.dateTime().toString(self.dt_format)
         dt_requested_delivery_to = self.datetimeedit_requested_delivery_to.dateTime().toString(self.dt_format)
 
         now = datetime.datetime.now(pytz.timezone('Europe/Stockholm'))
         utc = now.strftime("%z")
         self.dt_created_at = dt_created_at + utc
-        self.dt_acknowledge_at = dt_acknowledge_at + utc
         self.dt_requested_delivery_from = dt_requested_delivery_from + utc
         self.dt_requested_delivery_to = dt_requested_delivery_to + utc
 

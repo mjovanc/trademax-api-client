@@ -87,7 +87,8 @@ class PurchaseOrdersWidget(QWidget):
         """Toggles the purchase order window."""
         try:
             purchase_order_id = self.listwidget_purchase_orders.currentItem().text().split('|')[0]
-            self.window_purchase_order = PurchaseOrderWindow(self.trademax_api, purchase_order_id)
+            purchase_order = self.get_purchase_order(purchase_order_id)
+            self.window_purchase_order = PurchaseOrderWindow(self.trademax_api, purchase_order)
 
             if self.window_purchase_order.isVisible():
                 self.window_purchase_order.hide()
@@ -114,7 +115,7 @@ class PurchaseOrdersWidget(QWidget):
                                                  self.tr('Enter ID:'), QLineEdit.Normal, '')
         if ok_pressed and po_id != '':
             try:
-                self.window_purchase_order = PurchaseOrderWindow(self.get_purchase_order(po_id))
+                self.window_purchase_order = PurchaseOrderWindow(self.trademax_api, self.get_purchase_order(po_id))
                 self.window_purchase_order.show()
             except AttributeError:
                 add_logging_critical()

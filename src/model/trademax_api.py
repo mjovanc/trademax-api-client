@@ -60,7 +60,7 @@ class TrademaxAPI:
 
         created_date_from = months_back_datetime
         created_date_to = now_datetime
-        latest = 1
+        latest = 0 # TODO: Change this to 1 later
         per_page = 25
         sales_order_tenant = ''
 

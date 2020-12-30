@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1600</width>
+    <width>900</width>
     <height>580</height>
    </rect>
   </property>
@@ -45,7 +45,7 @@
     <rect>
      <x>20</x>
      <y>120</y>
-     <width>1551</width>
+     <width>861</width>
      <height>431</height>
     </rect>
    </property>
@@ -58,8 +58,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1549</width>
-          <height>321</height>
+          <width>861</width>
+          <height>371</height>
          </rect>
         </property>
         <property name="currentIndex">
@@ -74,8 +74,8 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>721</width>
-            <height>121</height>
+            <width>381</width>
+            <height>131</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout">
@@ -138,10 +138,10 @@
          <widget class="QWidget" name="formLayoutWidget_2">
           <property name="geometry">
            <rect>
-            <x>770</x>
+            <x>420</x>
             <y>20</y>
-            <width>751</width>
-            <height>141</height>
+            <width>421</width>
+            <height>151</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_2">
@@ -242,8 +242,8 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>721</width>
-            <height>671</height>
+            <width>821</width>
+            <height>91</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_3">
@@ -310,8 +310,8 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>661</width>
-            <height>671</height>
+            <width>381</width>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_4">
@@ -360,10 +360,10 @@
          <widget class="QWidget" name="formLayoutWidget_5">
           <property name="geometry">
            <rect>
-            <x>710</x>
+            <x>420</x>
             <y>20</y>
-            <width>811</width>
-            <height>671</height>
+            <width>421</width>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_5">
@@ -419,8 +419,8 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>681</width>
-            <height>671</height>
+            <width>831</width>
+            <height>61</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="formLayout_6">
@@ -473,8 +473,8 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>1501</width>
-            <height>561</height>
+            <width>821</width>
+            <height>291</height>
            </rect>
           </property>
           <property name="showGrid">
@@ -501,10 +501,10 @@
        <widget class="QWidget" name="horizontalLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>660</x>
-          <y>340</y>
-          <width>881</width>
-          <height>71</height>
+          <x>360</x>
+          <y>380</y>
+          <width>501</width>
+          <height>51</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
