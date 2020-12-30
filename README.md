@@ -32,6 +32,16 @@ If not compiled to an executable, use the steps below to run it with Python inte
 
 ## Screenshots
 
+![TAC Screenshot 1](screenshot01.JPG)
+![TAC Screenshot 2](screenshot02.JPG)
+![TAC Screenshot 3](screenshot03.JPG)
+![TAC Screenshot 4](screenshot04.JPG)
+![TAC Screenshot 5](screenshot05.JPG)
+![TAC Screenshot 6](screenshot06.JPG)
+![TAC Screenshot 7](screenshot07.JPG)
+![TAC Screenshot 8](screenshot08.JPG)
+![TAC Screenshot 9](screenshot09.JPG)
+
 ## License
 
 The application is licensed under MIT.
