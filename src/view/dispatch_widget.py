@@ -19,9 +19,8 @@ parser.read(os.path.join(BASE_DIR, 'settings.ini'), )
 
 
 class DispatchWidget(QWidget):
-    """
-    Displays a Dispatch Window.
-    """
+    """Displays a Dispatch Window."""
+
     def __init__(self, parent, po_id, trademax_api):
         super().__init__(parent)
         uic.loadUi(UI_FILE, self)
@@ -97,8 +96,8 @@ class DispatchWidget(QWidget):
             add_logging_critical()
 
     def format_datetime(self):
-        """
-        Formats QDateTimeEdit fields to strings.
+        """Formats QDateTimeEdit fields to strings.
+
         Is used for preparing data to send through API.
         """
         dt_dispatch_date = self.datetimeedit_dispatch_date.dateTime().toString(self.dt_format)

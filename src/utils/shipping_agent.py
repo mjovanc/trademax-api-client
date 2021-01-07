@@ -2,9 +2,8 @@ from enum import Enum
 
 
 class ShippingAgent(Enum):
-    """
-    Status Enums for response to API.
-    """
+    """Status Enums for response to API."""
+
     POSTNORD = 'PostNord'
     SCHENKER = 'Schenker'
     DHL = 'DHL'

@@ -16,9 +16,8 @@ UI_FILE = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 
 
 class PurchaseOrdersWidget(QWidget):
-    """
-    Displays Purchase Orders Window.
-    """
+    """Displays Purchase Orders Window."""
+
     def __init__(self, parent, trademax_api):
         super().__init__(parent)
         uic.loadUi(UI_FILE, self)

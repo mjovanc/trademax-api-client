@@ -21,9 +21,8 @@ parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class MainWindow(QMainWindow):
-    """
-    Displays the Main Window.
-    """
+    """Displays the Main Window."""
+
     def __init__(self):
         super().__init__()
         uic.loadUi(UI_FILE, self)

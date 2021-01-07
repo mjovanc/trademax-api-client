@@ -13,9 +13,8 @@ parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class TrademaxAPI:
-    """
-    TrademaxAPI class to handle all API requests.
-    """
+    """TrademaxAPI class to handle all API requests."""
+
     API_UUID = ''
     API_PASSWORD = ''
     API_URL = ''

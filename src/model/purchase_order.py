@@ -1,7 +1,6 @@
 class PurchaseOrder:
-    """
-    Represents a Purchase Order.
-    """
+    """Represents a Purchase Order."""
+
     id = ''
     purchase_order_id = ''
     latest = False

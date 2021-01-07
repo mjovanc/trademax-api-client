@@ -19,9 +19,8 @@ parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class InvoiceWidget(QWidget):
-    """
-    Displays a Invoice Window.
-    """
+    """Displays a Invoice Window."""
+
     def __init__(self, parent, po_id, trademax_api):
         super().__init__(parent)
         uic.loadUi(UI_FILE, self)

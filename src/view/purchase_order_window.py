@@ -22,9 +22,8 @@ parser.read(os.path.join(BASE_DIR, 'settings.ini'),)
 
 
 class PurchaseOrderWindow(QWidget):
-    """
-    Displays a Purchase Order Window.
-    """
+    """Displays a Purchase Order Window."""
+
     def __init__(self, trademax_api, po_obj):
         super().__init__()
         uic.loadUi(UI_FILE, self)
@@ -215,8 +214,8 @@ class PurchaseOrderWindow(QWidget):
             add_logging_critical()
 
     def format_datetime(self):
-        """
-        Formats QDateTimeEdit fields to strings.
+        """Formats QDateTimeEdit fields to strings.
+
         Is used for preparing data to send through API.
         """
         dt_created_at = self.datetimeedit_created_at.dateTime().toString(self.dt_format)
